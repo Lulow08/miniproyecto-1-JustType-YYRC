@@ -26,7 +26,6 @@
       <HBox
               prefWidth="110" prefHeight="38"
               alignment="CENTER"
-              spacing="0"
               style="-fx-background-color: #0C0910; -fx-background-radius: 19; -fx-border-radius: 19; -fx-border-color: #FBFBFB; -fx-border-width: 1;"
               AnchorPane.topAnchor="0"
               AnchorPane.leftAnchor="258">
