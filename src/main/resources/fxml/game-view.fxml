@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+
+<AnchorPane
+        prefWidth="640" prefHeight="360"
+        minWidth="640" minHeight="360"
+        style="-fx-background-color: #0C0910;"
+        xmlns="http://javafx.com/javafx/17"
+        xmlns:fx="http://javafx.com/fxml/1"
+        fx:controller="com.lulow.justtype.Main">
+
+   <AnchorPane
+           prefWidth="640" prefHeight="38"
+           AnchorPane.topAnchor="24"
+           AnchorPane.leftAnchor="0"
+           AnchorPane.rightAnchor="0">
+
+      <HBox
+              prefWidth="144" prefHeight="38"
+              alignment="CENTER"
+              spacing="0"
+              style="-fx-background-color: #0C0910; -fx-background-radius: 19; -fx-border-radius: 19; -fx-border-color: #FBFBFB; -fx-border-width: 1;"
+              AnchorPane.topAnchor="0"
+              AnchorPane.leftAnchor="248">
+
+         <StackPane prefWidth="144" prefHeight="38">
+
+            <Label
+                    fx:id="clockIcon"
+                    text="🕐"
+                    style="-fx-text-fill: #FBFBFB; -fx-font-size: 24px;"
+                    StackPane.alignment="CENTER_LEFT">
+               <StackPane.margin>
+                  <Insets left="12"/>
+               </StackPane.margin>
+            </Label>
+
+            <Label
+                    fx:id="timerLabel"
+                    text="20"
+                    alignment="CENTER"
+                    style="-fx-text-fill: #FBFBFB; -fx-font-family: 'BDO Grotesk'; -fx-font-size: 18px;"
+                    StackPane.alignment="CENTER"/>
+
+         </StackPane>
+
+      </HBox>
+
+      <Label
+              fx:id="levelLabel"
+              text="#1"
+              style="-fx-text-fill: #07DACC; -fx-font-family: 'Determination'; -fx-font-size: 24px;"
+              AnchorPane.topAnchor="0"
+              AnchorPane.rightAnchor="36"
+              AnchorPane.bottomAnchor="0"/>
+
+   </AnchorPane>
+
+   <Label
+           fx:id="dataLabel"
+           text="datos"
+           style="-fx-text-fill: #888888; -fx-font-family: 'Determination'; -fx-font-size: 80px;"
+           alignment="CENTER"
+           maxWidth="Infinity"
+           AnchorPane.topAnchor="78"
+           AnchorPane.leftAnchor="0"
+           AnchorPane.rightAnchor="0"/>
+
+   <StackPane
+           prefHeight="50"
+           AnchorPane.topAnchor="198"
+           AnchorPane.leftAnchor="144"
+           AnchorPane.rightAnchor="144">
+
+      <TextField
+              fx:id="inputField"
+              prefHeight="50"
+              maxWidth="Infinity"
+              style="-fx-background-color: #0C0910; -fx-border-color: #888888; -fx-border-width: 1; -fx-border-radius: 0; -fx-background-radius: 0; -fx-text-fill: #FBFBFB; -fx-font-family: 'BDO Grotesk'; -fx-font-size: 22px; -fx-padding: 0 50 0 12; -fx-highlight-fill: #07DACC; -fx-highlight-text-fill: #0C0910; -fx-display-caret: true;"/>
+
+      <Button
+              fx:id="submitButton"
+              prefHeight="30" prefWidth="36"
+              style="-fx-background-color: #FBFBFB; -fx-background-radius: 10; -fx-border-radius: 10; -fx-cursor: hand; -fx-padding: 0;"
+              StackPane.alignment="CENTER_RIGHT">
+         <StackPane.margin>
+            <Insets right="8"/>
+         </StackPane.margin>
+         <graphic>
+            <Label
+                    text="↑"
+                    style="-fx-text-fill: #000000; -fx-font-size: 14px; -fx-font-weight: bold;"/>
+         </graphic>
+      </Button>
+
+   </StackPane>
+
+</AnchorPane>
