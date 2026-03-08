@@ -24,22 +24,22 @@
            AnchorPane.rightAnchor="0">
 
       <HBox
-              prefWidth="144" prefHeight="38"
+              prefWidth="110" prefHeight="38"
               alignment="CENTER"
               spacing="0"
               style="-fx-background-color: #0C0910; -fx-background-radius: 19; -fx-border-radius: 19; -fx-border-color: #FBFBFB; -fx-border-width: 1;"
               AnchorPane.topAnchor="0"
-              AnchorPane.leftAnchor="248">
+              AnchorPane.leftAnchor="258">
 
-         <StackPane prefWidth="144" prefHeight="38">
+         <StackPane prefWidth="110" prefHeight="38">
 
             <Label
                     fx:id="clockIcon"
-                    text="🕐"
-                    style="-fx-text-fill: #FBFBFB; -fx-font-size: 24px;"
+                    text="󰄉"
+                    style="-fx-text-fill: #FBFBFB; -fx-font-size: 18px;"
                     StackPane.alignment="CENTER_LEFT">
                <StackPane.margin>
-                  <Insets left="12"/>
+                  <Insets left="10"/>
                </StackPane.margin>
             </Label>
 
@@ -47,7 +47,7 @@
                     fx:id="timerLabel"
                     text="20"
                     alignment="CENTER"
-                    style="-fx-text-fill: #FBFBFB; -fx-font-family: 'BDO Grotesk'; -fx-font-size: 18px;"
+                    style="-fx-text-fill: #FBFBFB; -fx-font-family: 'Geist Mono'; -fx-font-size: 18px;"
                     StackPane.alignment="CENTER"/>
 
          </StackPane>
@@ -65,7 +65,7 @@
    </AnchorPane>
 
    <Label
-           fx:id="dataLabel"
+           fx:id="wordLabel"
            text="datos"
            style="-fx-text-fill: #888888; -fx-font-family: 'Determination'; -fx-font-size: 80px;"
            alignment="CENTER"
@@ -84,20 +84,20 @@
               fx:id="inputField"
               prefHeight="50"
               maxWidth="Infinity"
-              style="-fx-background-color: #0C0910; -fx-border-color: #888888; -fx-border-width: 1; -fx-border-radius: 0; -fx-background-radius: 0; -fx-text-fill: #FBFBFB; -fx-font-family: 'BDO Grotesk'; -fx-font-size: 22px; -fx-padding: 0 50 0 12; -fx-highlight-fill: #07DACC; -fx-highlight-text-fill: #0C0910; -fx-display-caret: true;"/>
+              style="-fx-background-color: #0C0910; -fx-border-color: #888888; -fx-border-width: 1; -fx-border-radius: 0; -fx-background-radius: 0; -fx-text-fill: #FBFBFB; -fx-font-family: 'Geist Mono'; -fx-font-size: 22px; -fx-padding: 0 50 0 12; -fx-highlight-fill: #07DACC; -fx-highlight-text-fill: #0C0910; -fx-display-caret: true;"/>
 
       <Button
-              fx:id="submitButton"
-              prefHeight="30" prefWidth="36"
-              style="-fx-background-color: #FBFBFB; -fx-background-radius: 10; -fx-border-radius: 10; -fx-cursor: hand; -fx-padding: 0;"
+              fx:id="confirmButton"
+              prefHeight="30" prefWidth="34"
+              style="-fx-background-color: #FBFBFB; -fx-background-radius: 8; -fx-border-radius: 8; -fx-cursor: hand; -fx-padding: 0;"
               StackPane.alignment="CENTER_RIGHT">
          <StackPane.margin>
             <Insets right="8"/>
          </StackPane.margin>
          <graphic>
             <Label
-                    text="↑"
-                    style="-fx-text-fill: #000000; -fx-font-size: 14px; -fx-font-weight: bold;"/>
+                    text=""
+                    style="-fx-text-fill: #0C0910; -fx-font-size: 17px;"/>
          </graphic>
       </Button>
 
