@@ -2,5 +2,7 @@ package com.lulow.justtype.model.validator;
 
 public abstract class ValidatorAdapter implements IValidator {
     @Override
-    public void validateAnswer(String answer) {}
+    public boolean validateAnswer(String answer, String expected) {
+        return false;
+    }
 }

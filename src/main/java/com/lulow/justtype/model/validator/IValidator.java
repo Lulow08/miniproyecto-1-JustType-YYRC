@@ -1,5 +1,5 @@
 package com.lulow.justtype.model.validator;
 
 public interface IValidator {
-    public void validateAnswer(String answer);
+    boolean validateAnswer(String answer, String expected);
 }
