@@ -38,7 +38,7 @@ public class GameLogic {
         currentLevel = 1;
     }
 
-    public int getTimeForCurrentLevel() {
+    public int getMaxTimeForCurrentLevel() {
         int reductions = (currentLevel - 1) / LEVELS_PER_REDUCTION;
         int time = INITIAL_TIME - (reductions * TIME_REDUCTION);
         return Math.max(time, MIN_TIME);
