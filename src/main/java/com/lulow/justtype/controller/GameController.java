@@ -14,7 +14,7 @@ public class GameController {
     @FXML private Label     levelLabel;
     @FXML private Label     timerLabel;
 
-    private GameLogic gameLogic = new GameLogic();
+    private final GameLogic gameLogic = new GameLogic();
     private GameView gameView;
 
     @FXML
