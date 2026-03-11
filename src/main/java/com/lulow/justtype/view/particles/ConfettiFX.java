@@ -14,7 +14,6 @@ import java.util.Random;
 
 public class ConfettiFX extends ParticleEmitterAdapter{
 
-    private Rectangle rectangle;
     private final Pane layer;
 
     private final List<Particle> particles = new ArrayList<>();
@@ -26,10 +25,10 @@ public class ConfettiFX extends ParticleEmitterAdapter{
     private static final int PARTICLES_PER_SPAWN = 4;
     private static final double MIN_OPACITY = 0.4;
     private static final double OPACITY_VARIANCE = 0.6;
-    private final double MIN_PARTICLE_SIZE = 4.0;
-    private final double MAX_PARTICLE_SIZE = 10.0;
-    private final double X_START_PADDING = 2.0;
-    private final double Y_START_PADDING = 10.0;
+    private static final double MIN_PARTICLE_SIZE = 6.0;
+    private static final double MAX_PARTICLE_SIZE = 10.0;
+    private static final double X_START_PADDING = 2.0;
+    private static final double Y_START_PADDING = 10.0;
     private static final double OFF_SCREEN_THRESHOLD = 50.0;
 
     private boolean emitting = false;
@@ -98,7 +97,9 @@ public class ConfettiFX extends ParticleEmitterAdapter{
     }
 
     private Rectangle renderParticle(double size, double xPos, double yPos) {
-        rectangle = new Rectangle(size, size);
+
+        Rectangle rectangle = new Rectangle(size, size);
+
         rectangle.setFill(Color.WHITE);
         rectangle.setOpacity(MIN_OPACITY + random.nextDouble() * OPACITY_VARIANCE);
 
