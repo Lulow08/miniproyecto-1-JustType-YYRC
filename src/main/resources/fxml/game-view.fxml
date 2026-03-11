@@ -32,17 +32,7 @@
                  AnchorPane.topAnchor="0"
                  AnchorPane.leftAnchor="258">
 
-            <StackPane prefWidth="110" prefHeight="38">
-
-               <Label
-                       text="󰄉"
-                       style="-fx-text-fill: #FBFBFB; -fx-font-size: 18px; -fx-font-family: 'GeistMono NF';"
-                       StackPane.alignment="CENTER_LEFT">
-                  <StackPane.margin>
-                     <Insets left="10" bottom="1"/>
-                  </StackPane.margin>
-               </Label>
-
+            <StackPane fx:id="timerPane" prefWidth="110" prefHeight="38">
                <Label
                        fx:id="timerLabel"
                        text="20"
