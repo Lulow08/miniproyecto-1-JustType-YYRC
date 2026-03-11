@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 
 public class GameController {
 
@@ -19,6 +20,7 @@ public class GameController {
     @FXML private Label     timerLabel;
     @FXML private Button    submitButton;
     @FXML private AnchorPane rootPane;
+    @FXML private StackPane  timerPane;
 
     private final GameLogic gameLogic = new GameLogic();
     private GameView gameView;
@@ -27,7 +29,7 @@ public class GameController {
 
     @FXML
     public void initialize() {
-        gameView = new GameView(wordDisplay, levelLabel, timerLabel);
+        gameView = new GameView(wordDisplay, levelLabel, timerLabel, timerPane, rootPane);
         gameTimer = new GameTimer(this::onTick, this::onTimeUp);
         confetti = new ConfettiFX(rootPane, 640, 360);
 
@@ -80,7 +82,9 @@ public class GameController {
     }
 
     private void startTimer() {
-        gameTimer.start(gameLogic.getMaxTimeForCurrentLevel());
+        int maxTime = gameLogic.getMaxTimeForCurrentLevel();
+        gameView.initTimer(maxTime);
+        gameTimer.start(maxTime);
     }
 
     private void refreshUI() {
