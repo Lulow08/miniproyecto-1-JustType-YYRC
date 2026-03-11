@@ -84,6 +84,7 @@
                  onAction="#onHandleEnter"/>
 
          <Button
+                 fx:id="submitButton"
                  prefHeight="30" prefWidth="34"
                  style="-fx-background-color: #FBFBFB; -fx-background-radius: 8; -fx-border-radius: 8; -fx-cursor: hand; -fx-padding: 0;"
                  StackPane.alignment="CENTER_RIGHT"
