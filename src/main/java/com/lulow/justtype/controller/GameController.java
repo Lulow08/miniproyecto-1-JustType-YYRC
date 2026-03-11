@@ -5,6 +5,7 @@ import com.lulow.justtype.model.timer.GameTimer;
 import com.lulow.justtype.view.particles.ConfettiFX;
 import com.lulow.justtype.view.GameView;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -16,6 +17,7 @@ public class GameController {
     @FXML private HBox      wordDisplay;
     @FXML private Label     levelLabel;
     @FXML private Label     timerLabel;
+    @FXML private Button    submitButton;
     @FXML private AnchorPane rootPane;
 
     private final GameLogic gameLogic = new GameLogic();
@@ -28,6 +30,8 @@ public class GameController {
         gameView = new GameView(wordDisplay, levelLabel, timerLabel);
         gameTimer = new GameTimer(this::onTick, this::onTimeUp);
         confetti = new ConfettiFX(rootPane, 640, 360);
+
+        gameView.setupAnimations(inputField, submitButton);
 
         gameLogic.nextWord();
         refreshUI();
@@ -45,9 +49,12 @@ public class GameController {
     private void onHandleEnter() { submitAnswer(inputField.getText()); }
 
     private void submitAnswer(String input) {
-        boolean correct = gameLogic.processAnswer(input);
+        gameView.playInputAnimation();
+        gameTimer.stop();
 
-        if (correct) {
+        boolean isCorrect = gameLogic.processAnswer(input);
+
+        if (isCorrect) {
             gameLogic.levelUp();
             confetti.play(0.02);
         }
