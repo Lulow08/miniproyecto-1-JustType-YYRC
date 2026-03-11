@@ -33,8 +33,6 @@ public class GameView {
     private String  activeCharStyle = CHAR_BASE_STYLE;
     private PressAnimation inputAnimation;
     private PressAnimation buttonAnimation;
-    private OvershootAnimation wordAnimation;
-    private OvershootAnimation timeAnimation;
 
     public GameView(HBox wordDisplay, Label levelLabel, Label timerLabel) {
         this.wordDisplay = wordDisplay;
@@ -51,12 +49,10 @@ public class GameView {
         submitButton.setOnMouseEntered(event -> submitButton.setStyle(BTN_HOVER));
         submitButton.setOnMouseExited(event  -> submitButton.setStyle(BTN_NORMAL));
 
-        submitButton.setOnMousePressed(event -> { buttonAnimation.play(); });
-        submitButton.setOnMouseReleased(event -> {
-            submitButton.setStyle(
-                    submitButton.isHover() ? BTN_HOVER : BTN_NORMAL
-            );
-        });
+        submitButton.setOnMousePressed(event -> buttonAnimation.play());
+        submitButton.setOnMouseReleased(event -> submitButton.setStyle(
+                submitButton.isHover() ? BTN_HOVER : BTN_NORMAL
+        ));
     }
 
     public void playInputAnimation() {
@@ -76,7 +72,7 @@ public class GameView {
             wordDisplay.getChildren().add(lbl);
         }
 
-        wordAnimation = new OvershootAnimation(wordDisplay, 1.16, 0.96);
+        OvershootAnimation wordAnimation = new OvershootAnimation(wordDisplay, 1.16, 0.96);
         wordAnimation.play();
     }
 
@@ -97,7 +93,7 @@ public class GameView {
         timerLabel.setText(String.valueOf(secondsLeft));
         timerLabel.setStyle(secondsLeft <= CRITICAL_TIME_THRESHOLD ? TIMER_CRITICAL : TIMER_NORMAL);
 
-        timeAnimation = new OvershootAnimation(timerLabel, 1.3, 0.94);
+        OvershootAnimation timeAnimation = new OvershootAnimation(timerLabel, 1.3, 0.94);
         if (secondsLeft <= CRITICAL_TIME_THRESHOLD) { timeAnimation.play(); }
     }
 }
