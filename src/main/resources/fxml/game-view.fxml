@@ -8,93 +8,98 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 
-<AnchorPane
-        prefWidth="640" prefHeight="360"
-        minWidth="640" minHeight="360"
-        style="-fx-background-color: #0C0910;"
+<StackPane
         xmlns="http://javafx.com/javafx/17"
         xmlns:fx="http://javafx.com/fxml/1"
         fx:controller="com.lulow.justtype.controller.GameController">
 
    <AnchorPane
-           prefWidth="640" prefHeight="38"
-           AnchorPane.topAnchor="24"
-           AnchorPane.leftAnchor="0"
-           AnchorPane.rightAnchor="0">
+           fx:id="rootPane"
+           prefWidth="640" prefHeight="360"
+           minWidth="640" minHeight="360"
+           style="-fx-background-color: #0C0910;">
+
+      <AnchorPane
+              prefWidth="640" prefHeight="38"
+              AnchorPane.topAnchor="24"
+              AnchorPane.leftAnchor="0"
+              AnchorPane.rightAnchor="0">
+
+         <HBox
+                 prefWidth="110" prefHeight="38"
+                 alignment="CENTER"
+                 style="-fx-background-color: #0C0910; -fx-background-radius: 19; -fx-border-radius: 19; -fx-border-color: #FBFBFB; -fx-border-width: 1;"
+                 AnchorPane.topAnchor="0"
+                 AnchorPane.leftAnchor="258">
+
+            <StackPane prefWidth="110" prefHeight="38">
+
+               <Label
+                       text="󰄉"
+                       style="-fx-text-fill: #FBFBFB; -fx-font-size: 18px; -fx-font-family: 'GeistMono NF';"
+                       StackPane.alignment="CENTER_LEFT">
+                  <StackPane.margin>
+                     <Insets left="10" bottom="1"/>
+                  </StackPane.margin>
+               </Label>
+
+               <Label
+                       fx:id="timerLabel"
+                       text="20"
+                       alignment="CENTER"
+                       style="-fx-text-fill: #FBFBFB; -fx-font-family: 'GeistMono NF'; -fx-font-size: 20px;"
+                       StackPane.alignment="CENTER"/>
+
+            </StackPane>
+
+         </HBox>
+
+         <Label
+                 fx:id="levelLabel"
+                 style="-fx-text-fill: #07DACC; -fx-font-family: 'Determination'; -fx-font-size: 24px;"
+                 AnchorPane.topAnchor="0"
+                 AnchorPane.rightAnchor="36"
+                 AnchorPane.bottomAnchor="0"/>
+
+      </AnchorPane>
 
       <HBox
-              prefWidth="110" prefHeight="38"
+              fx:id="wordDisplay"
               alignment="CENTER"
-              style="-fx-background-color: #0C0910; -fx-background-radius: 19; -fx-border-radius: 19; -fx-border-color: #FBFBFB; -fx-border-width: 1;"
-              AnchorPane.topAnchor="0"
-              AnchorPane.leftAnchor="258">
+              AnchorPane.topAnchor="78"
+              AnchorPane.leftAnchor="0"
+              AnchorPane.rightAnchor="0"/>
 
-         <StackPane prefWidth="110" prefHeight="38">
+      <StackPane
+              prefHeight="48"
+              AnchorPane.topAnchor="198"
+              AnchorPane.leftAnchor="144"
+              AnchorPane.rightAnchor="144">
 
-            <Label
-                    text="󰄉"
-                    style="-fx-text-fill: #FBFBFB; -fx-font-size: 18px; -fx-font-family: 'GeistMono NF';"
-                    StackPane.alignment="CENTER_LEFT">
-               <StackPane.margin>
-                  <Insets left="10" bottom="1"/>
-               </StackPane.margin>
-            </Label>
+         <TextField
+                 fx:id="inputField"
+                 prefHeight="48"
+                 maxWidth="Infinity"
+                 style="-fx-background-color: #0C0910; -fx-border-color: #888888; -fx-border-width: 1; -fx-border-radius: 0; -fx-background-radius: 0; -fx-text-fill: #FBFBFB; -fx-font-family: 'GeistMono NF'; -fx-font-size: 22px; -fx-padding: 0 46 0 12; -fx-highlight-fill: #07DACC; -fx-highlight-text-fill: #0C0910; -fx-display-caret: true;"
+                 onAction="#onHandleEnter"/>
 
-            <Label
-                    fx:id="timerLabel"
-                    text="20"
-                    alignment="CENTER"
-                    style="-fx-text-fill: #FBFBFB; -fx-font-family: 'GeistMono NF'; -fx-font-size: 20px;"
-                    StackPane.alignment="CENTER"/>
+         <Button
+                 prefHeight="30" prefWidth="34"
+                 style="-fx-background-color: #FBFBFB; -fx-background-radius: 8; -fx-border-radius: 8; -fx-cursor: hand; -fx-padding: 0;"
+                 StackPane.alignment="CENTER_RIGHT"
+                 onAction="#onHandleSubmitButton">
+            <StackPane.margin>
+               <Insets right="8"/>
+            </StackPane.margin>
+            <graphic>
+               <Label
+                       text=""
+                       style="-fx-text-fill: #0C0910; -fx-font-size: 17px; -fx-font-family: 'GeistMono NF';"/>
+            </graphic>
+         </Button>
 
-         </StackPane>
-
-      </HBox>
-
-      <Label
-              fx:id="levelLabel"
-              style="-fx-text-fill: #07DACC; -fx-font-family: 'Determination'; -fx-font-size: 24px;"
-              AnchorPane.topAnchor="0"
-              AnchorPane.rightAnchor="36"
-              AnchorPane.bottomAnchor="0"/>
+      </StackPane>
 
    </AnchorPane>
 
-   <HBox
-           fx:id="wordDisplay"
-           alignment="CENTER"
-           AnchorPane.topAnchor="78"
-           AnchorPane.leftAnchor="0"
-           AnchorPane.rightAnchor="0"/>
-
-   <StackPane
-           prefHeight="48"
-           AnchorPane.topAnchor="198"
-           AnchorPane.leftAnchor="144"
-           AnchorPane.rightAnchor="144">
-
-      <TextField
-              fx:id="inputField"
-              prefHeight="48"
-              maxWidth="Infinity"
-              style="-fx-background-color: #0C0910; -fx-border-color: #888888; -fx-border-width: 1; -fx-border-radius: 0; -fx-background-radius: 0; -fx-text-fill: #FBFBFB; -fx-font-family: 'GeistMono NF'; -fx-font-size: 22px; -fx-padding: 0 46 0 12; -fx-highlight-fill: #07DACC; -fx-highlight-text-fill: #0C0910; -fx-display-caret: true;"
-              onAction="#onHandleEnter"/>
-
-      <Button
-              prefHeight="30" prefWidth="34"
-              style="-fx-background-color: #FBFBFB; -fx-background-radius: 8; -fx-border-radius: 8; -fx-cursor: hand; -fx-padding: 0;"
-              StackPane.alignment="CENTER_RIGHT"
-              onAction="#onHandleSubmitButton">
-         <StackPane.margin>
-            <Insets right="8"/>
-         </StackPane.margin>
-         <graphic>
-            <Label
-                    text=""
-                    style="-fx-text-fill: #0C0910; -fx-font-size: 17px; -fx-font-family: 'GeistMono NF';"/>
-         </graphic>
-      </Button>
-
-   </StackPane>
-
-</AnchorPane>
+</StackPane>
