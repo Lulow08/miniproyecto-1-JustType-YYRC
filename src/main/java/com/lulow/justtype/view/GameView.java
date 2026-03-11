@@ -6,7 +6,7 @@ import javafx.scene.layout.HBox;
 
 public class GameView {
 
-    private static final String COLOR_NEUTRAL = "-fx-text-fill: #888888;";
+    private static final String COLOR_NEUTRAL  = "-fx-text-fill: #888888;";
     private static final String COLOR_CORRECT  = "-fx-text-fill: #07DACC;";
     private static final String COLOR_WRONG    = "-fx-text-fill: #FF4C4C;";
 
