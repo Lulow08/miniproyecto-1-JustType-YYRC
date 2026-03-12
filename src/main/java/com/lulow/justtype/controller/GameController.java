@@ -94,7 +94,7 @@ public class GameController {
         inputField.clear();
         refreshUI();
         startTimer();
-        gameView.playEntranceAnimations(inputField, submitButton);
+        gameView.playEntranceAnimations();
     }
 
     private void startTimer() {

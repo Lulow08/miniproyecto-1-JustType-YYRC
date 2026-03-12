@@ -71,7 +71,7 @@ public class GameView {
 
     public void playInputAnimation() { if (inputAnimation != null) inputAnimation.play(); }
 
-    public void playEntranceAnimations(TextField inputField, Button submitButton) {
+    public void playEntranceAnimations() {
         new SlideInAnimation(timerPill, TIMER_PILL_SLIDE_FROM, 1).play();
         new OvershootAnimation(wordDisplay, 1.16, 0.96).play();
         inputAnimation.play();
