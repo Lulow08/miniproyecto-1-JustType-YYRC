@@ -19,7 +19,7 @@
 .timer-label-critical {
     -fx-text-fill: #FF4C4C;
     -fx-font-family: 'GeistMono NF';
-    -fx-font-size: 20px;
+    -fx-font-size: 24px;
 }
 
 .level-label {
