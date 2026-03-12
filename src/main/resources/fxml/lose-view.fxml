@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane
+        xmlns="http://javafx.com/javafx/17"
+        xmlns:fx="http://javafx.com/fxml/1"
+        fx:controller="com.lulow.justtype.controller.LoseController"
+        fx:id="rootPane"
+        prefWidth="640" prefHeight="360"
+        styleClass="root-pane">
+
+    <Label
+            fx:id="titleLabel"
+            text="YOU MISSED"
+            AnchorPane.topAnchor="16"
+            AnchorPane.leftAnchor="0"
+            AnchorPane.rightAnchor="0"
+            alignment="CENTER"
+            maxWidth="Infinity"
+            styleClass="lose-title"/>
+
+    <Label
+            fx:id="wordLabel"
+            AnchorPane.topAnchor="78"
+            AnchorPane.leftAnchor="0"
+            AnchorPane.rightAnchor="0"
+            alignment="CENTER"
+            maxWidth="Infinity"
+            styleClass="word-label"/>
+
+    <Label
+            fx:id="answerLabel"
+            AnchorPane.topAnchor="190"
+            AnchorPane.leftAnchor="0"
+            AnchorPane.rightAnchor="0"
+            alignment="CENTER"
+            maxWidth="Infinity"
+            styleClass="lose-answer"/>
+
+    <Label
+            fx:id="hintLabel"
+            text="press RETURN to continue  ·  ESC to go back to main menu"
+            styleClass="lose-hint"
+            alignment="CENTER"
+            maxWidth="Infinity"
+            AnchorPane.bottomAnchor="16"
+            AnchorPane.leftAnchor="0"
+            AnchorPane.rightAnchor="0"/>
+
+</AnchorPane>
