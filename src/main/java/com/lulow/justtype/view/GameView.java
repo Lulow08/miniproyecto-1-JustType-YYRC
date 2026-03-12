@@ -101,7 +101,7 @@ public class GameView {
         timerLabel.setText(String.valueOf(secondsLeft));
 
         boolean critical = secondsLeft <= CRITICAL_TIME_THRESHOLD;
-        timerLabel.setStyle(critical ? CSS_TIMER_CRITICAL : CSS_TIMER_NORMAL);
+        timerLabel.getStyleClass().add(critical ? CSS_TIMER_CRITICAL : CSS_TIMER_NORMAL);
 
         if (critical) { new OvershootAnimation(timerLabel, 1.3, 0.94).play(); }
 
