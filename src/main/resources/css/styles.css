@@ -1,0 +1,76 @@
+.root-pane {
+    -fx-background-color: #0C0910;
+}
+
+.timer-pill {
+    -fx-background-color: #0C0910;
+    -fx-background-radius: 19;
+    -fx-border-radius: 19;
+    -fx-border-color: #FBFBFB;
+    -fx-border-width: 1;
+}
+
+.timer-label {
+    -fx-text-fill: #FBFBFB;
+    -fx-font-family: 'GeistMono NF';
+    -fx-font-size: 20px;
+}
+
+.timer-label-critical {
+    -fx-text-fill: #FF4C4C;
+    -fx-font-family: 'GeistMono NF';
+    -fx-font-size: 20px;
+}
+
+.level-label {
+    -fx-text-fill: #07DACC;
+    -fx-font-family: 'Determination';
+    -fx-font-size: 24px;
+}
+
+.input-field {
+    -fx-background-color: #0C0910;
+    -fx-border-color: #888888;
+    -fx-border-width: 1;
+    -fx-border-radius: 0;
+    -fx-background-radius: 0;
+    -fx-text-fill: #FBFBFB;
+    -fx-font-family: 'GeistMono NF';
+    -fx-font-size: 22px;
+    -fx-padding: 0 46 0 12;
+    -fx-highlight-fill: #07DACC;
+    -fx-highlight-text-fill: #0C0910;
+    -fx-display-caret: true;
+}
+
+.submit-button {
+    -fx-background-color: #FBFBFB;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-cursor: hand;
+    -fx-padding: 0;
+}
+
+.submit-button:hover {
+    -fx-background-color: #C8C8C8;
+}
+
+.submit-button-icon {
+    -fx-text-fill: #0C0910;
+    -fx-font-size: 17px;
+    -fx-font-family: 'GeistMono NF';
+}
+
+.char-normal {
+    -fx-font-family: 'Determination';
+    -fx-font-size: 76px;
+}
+
+.char-small {
+    -fx-font-family: 'Determination';
+    -fx-font-size: 64px;
+}
+
+.char-neutral  { -fx-text-fill: #888888; }
+.char-correct  { -fx-text-fill: #07DACC; }
+.char-wrong    { -fx-text-fill: #FF4C4C; }
