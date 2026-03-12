@@ -1,8 +1,10 @@
 package com.lulow.justtype.view;
 
+import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.ArcType;
+import javafx.scene.shape.Circle;
 
 public class TimerArc {
 
@@ -13,6 +15,7 @@ public class TimerArc {
     private static final double FULL_CIRCLE    = 360.0;
 
     private final Arc arc;
+    private final Group container;
     private int totalSeconds;
 
     public TimerArc() {
@@ -24,9 +27,15 @@ public class TimerArc {
         arc.setFill(Color.TRANSPARENT);
         arc.setStroke(COLOR_NORMAL);
         arc.setStrokeWidth(STROKE_WIDTH);
+
+        Circle fixedBounds = new Circle(RADIUS + STROKE_WIDTH);
+        fixedBounds.setFill(Color.TRANSPARENT);
+        fixedBounds.setMouseTransparent(true);
+
+        container = new Group(fixedBounds, arc);
     }
 
-    public Arc getArc() { return arc; }
+    public Group getContainer() { return container; }
 
     public void init(int seconds) {
         totalSeconds = seconds;
