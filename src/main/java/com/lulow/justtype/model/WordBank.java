@@ -6,48 +6,49 @@ import java.util.Set;
 
 public class WordBank {
 
-    private final Random random = new Random();
-    private final Set<String> used = new HashSet<>();
-
-    private final String[] TIER_1 = {
+    private static final String[] TIER_1 = {
             "class", "git", "run", "bool", "IDEA",
             "star", "java", "fast", "game", "cast",
             "Type", "tree", "zip", "model", "word",
             "bug", "View", "main", "virus", "root"
     };
 
-    private final String[] TIER_2 = {
+    private static final String[] TIER_2 = {
             "integer", "commit", "Controller", "buffer", "Syntax",
             "module", "compile", "pointer", "interface", "console",
             "binary", "directory", "Source", "PACKAGE", "virtual",
             "Lambda", "String", "TERMINAL", "deploy", "Library"
     };
 
-    private final String[] TIER_3 = {
+    private static final String[] TIER_3 = {
             "framework", "Algorithm", "database", "endpoint", "CallBack",
             "recursion", "INSTANCE", "MetaData", "argument", "protocol",
             "middleware", "BreakPoint", "container", "gradient", "Heritage",
             "UNIVERSE", "velocity", "frontend", "Backend", "operator"
     };
 
-    private final String[] TIER_4 = {
+    private static final String[] TIER_4 = {
             "asynchronous", "polymorphism", "abstraction", "inheritance", "repository",
             "microservices", "concurrency", "deployment", "dependency", "environment",
             "performance", "transaction", "encryption", "throughput", "redundancy",
             "javascript", "reflection", "serialized", "immutable", "validation"
     };
 
-    private final String[] TIER_5 = {
+    private static final String[] TIER_5 = {
             "authentication", "infrastructure", "multithreading", "implementation", "uninterrupted",
             "synchronization", "decentralized", "encapsulation", "orchestration", "compatibility",
             "cryptography", "standardization", "maintainability", "vulnerability", "instantaneous",
             "metaprogramming", "parallelization", "functionality", "troubleshooting", "superstructure"
     };
 
+    private final Random random = new Random();
+    private final Set<String> used = new HashSet<>();
+
     public String getRandomWord(int level) {
         String[] tier = tierForLevel(level);
         String word;
         int attempts = 0;
+
         do {
             word = tier[random.nextInt(tier.length)];
             attempts++;
@@ -62,16 +63,18 @@ public class WordBank {
     }
 
     private void clearTierUsed(String[] tier) {
-        for (String w : tier) {
-            used.remove(w);
+        for (String word : tier) {
+            used.remove(word);
         }
     }
 
     private String[] tierForLevel(int level) {
-        if (level <= 5)  return TIER_1;
-        if (level <= 10) return TIER_2;
-        if (level <= 20) return TIER_3;
-        if (level <= 35) return TIER_4;
-        return TIER_5;
+        return switch (LevelConfig.getTierForLevel(level)) {
+            case T1 -> TIER_1;
+            case T2 -> TIER_2;
+            case T3 -> TIER_3;
+            case T4 -> TIER_4;
+            default -> TIER_5;
+        };
     }
 }
