@@ -14,6 +14,9 @@ public final class SceneManager {
     private static SceneManager instance;
     private Stage mainStage;
 
+    private String loseWord   = "";
+    private String loseAnswer = "";
+
     private SceneManager() {}
 
     public static SceneManager getInstance() {
@@ -24,6 +27,14 @@ public final class SceneManager {
     }
 
     public void setMainStage(Stage stage) { this.mainStage = stage; }
+
+    public void setLoseData(String word, String answer) {
+        this.loseWord   = word;
+        this.loseAnswer = answer;
+    }
+
+    public String getLoseWord()   { return loseWord; }
+    public String getLoseAnswer() { return loseAnswer; }
 
     public void loadFonts() {
         Font.loadFont(getClass().getResourceAsStream("/fonts/Determination-Regular.ttf"), 14);
