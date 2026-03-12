@@ -22,33 +22,31 @@ public class GameController {
     @FXML private AnchorPane rootPane;
     @FXML private StackPane  timerPane;
 
-    private final GameLogic gameLogic = new GameLogic();
+    private GameLogic gameLogic;
     private GameView gameView;
     private GameTimer gameTimer;
     private ConfettiFX confetti;
 
     @FXML
     public void initialize() {
+        gameLogic = new GameLogic();
         gameView = new GameView(wordDisplay, levelLabel, timerLabel, timerPane, rootPane);
         gameTimer = new GameTimer(this::onTick, this::onTimeUp);
-        confetti = new ConfettiFX(rootPane, 640, 360);
+        confetti = new ConfettiFX(rootPane, rootPane.getPrefWidth(), rootPane.getPrefHeight());
 
         gameView.setupAnimations(inputField, submitButton);
+
+        inputField.textProperty().addListener((observable, oldText, newText) ->
+                gameView.colorizeChars(newText, gameLogic.getCurrentWord())
+        );
 
         gameLogic.nextWord();
         refreshUI();
         startTimer();
-
-        inputField.textProperty().addListener((obs, oldText, newText) ->
-                gameView.colorizeChars(newText, gameLogic.getCurrentWord())
-        );
     }
 
-    @FXML
-    private void onHandleSubmitButton() { submitAnswer(inputField.getText()); }
-
-    @FXML
-    private void onHandleEnter() { submitAnswer(inputField.getText()); }
+    @FXML private void onSubmitButtonClicked() { submitAnswer(inputField.getText()); }
+    @FXML private void onEnterPressed() { submitAnswer(inputField.getText()); }
 
     private void submitAnswer(String input) {
         gameView.playInputAnimation();
@@ -59,8 +57,7 @@ public class GameController {
         if (isCorrect) {
             gameLogic.levelUp();
             confetti.play(0.02);
-        }
-        else { gameLogic.reset(); }
+        } else { gameLogic.reset(); }
 
         nextRound();
     }

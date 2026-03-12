@@ -22,7 +22,7 @@ public class GameTimer extends TimerAdapter {
         stop();
         secondsLeft = seconds;
 
-        timeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
+        timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
             secondsLeft--;
             if (secondsLeft <= 0) {
                 secondsLeft = 0;

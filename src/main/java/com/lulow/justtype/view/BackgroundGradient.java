@@ -1,5 +1,6 @@
 package com.lulow.justtype.view;
 
+import com.lulow.justtype.model.LevelConfig;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.layout.Pane;
@@ -8,13 +9,14 @@ import javafx.util.Duration;
 
 public class BackgroundGradient {
 
-    private static final Color COLOR_T1 = Color.web("#0C0910");
+    private static final Color COLOR_T1 = Theme.COLOR_BASE;
     private static final Color COLOR_T2 = Color.web("#0e0914");
     private static final Color COLOR_T3 = Color.web("#120a1c");
     private static final Color COLOR_T4 = Color.web("#8B80F9");
     private static final Color COLOR_T5 = Color.web("#F45B69");
-    private static final int   ANIM_MS  = 1200;
-    private static final int   STEPS    = 24;
+
+    private static final int ANIMATION_DURATION_MS = 1200;
+    private static final int ANIMATION_STEPS = 24;
 
     private final Pane target;
     private Color currentColor = COLOR_T1;
@@ -25,20 +27,21 @@ public class BackgroundGradient {
     }
 
     public void updateForLevel(int level) {
-        Color next = colorForLevel(level);
-        if (next.equals(currentColor)) return;
-        animateTo(next);
-        currentColor = next;
+        Color nextColor = colorForLevel(level);
+        if (nextColor.equals(currentColor)) return;
+        animateTo(nextColor);
+        currentColor = nextColor;
     }
 
-    private void animateTo(Color to) {
-        Color from = currentColor;
+    private void animateTo(Color targetColor) {
+        Color startColor = currentColor;
         Timeline timeline = new Timeline();
-        for (int i = 0; i <= STEPS; i++) {
-            double t = (double) i / STEPS;
-            Color interpolated = from.interpolate(to, t);
+
+        for (int steps = 0; steps <= ANIMATION_STEPS; steps++) {
+            double progress = (double) steps / ANIMATION_STEPS;
+            Color interpolated = startColor.interpolate(targetColor, progress);
             timeline.getKeyFrames().add(
-                    new KeyFrame(Duration.millis(ANIM_MS * t), e -> applyGradient(interpolated))
+                    new KeyFrame(Duration.millis(ANIMATION_DURATION_MS * progress), event -> applyGradient(interpolated))
             );
         }
         timeline.play();
@@ -47,16 +50,18 @@ public class BackgroundGradient {
     private void applyGradient(Color gradientColor) {
         target.setStyle(
                 "-fx-background-color: linear-gradient(to top, " +
-                        toHex(gradientColor) + " 0%, #0C0910 50%);"
+                        toHex(gradientColor) + " 0%, " + Theme.HEX_BASE + " 50%);"
         );
     }
 
     private Color colorForLevel(int level) {
-        if (level <= 5)  return COLOR_T1;
-        if (level <= 10) return COLOR_T2;
-        if (level <= 20) return COLOR_T3;
-        if (level <= 35) return COLOR_T4;
-        return COLOR_T5;
+        return switch (LevelConfig.getTierForLevel(level)) {
+            case T1 -> COLOR_T1;
+            case T2 -> COLOR_T2;
+            case T3 -> COLOR_T3;
+            case T4 -> COLOR_T4;
+            default -> COLOR_T5;
+        };
     }
 
     private String toHex(Color c) {

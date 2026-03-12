@@ -7,11 +7,12 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public final class SceneManager {
 
     private static SceneManager instance;
-    private static Stage mainStage;
+    private Stage mainStage;
 
     private SceneManager() {}
 
@@ -22,30 +23,22 @@ public final class SceneManager {
         return instance;
     }
 
-    public void setMainStage(Stage stage) {
-        this.mainStage = stage;
-    }
+    public void setMainStage(Stage stage) { this.mainStage = stage; }
 
     public void loadFonts() {
-        Font.loadFont(
-                getClass().getResourceAsStream("/fonts/Determination-Regular.ttf"),
-                14
-        );
-
-        Font.loadFont(
-                getClass().getResourceAsStream("/fonts/GeistMonoNerdFont-Regular.otf"),
-                14
-        );
+        Font.loadFont(getClass().getResourceAsStream("/fonts/Determination-Regular.ttf"), 14);
+        Font.loadFont(getClass().getResourceAsStream("/fonts/GeistMonoNerdFont-Regular.otf"), 14);
     }
 
-    public void loadScene(String fxmlPath) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/" + fxmlPath));
+    public void loadScene(String fxmlFile) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/" + fxmlFile));
 
         Parent root = fxmlLoader.load();
 
         Scene scene = new Scene(root);
-
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/styles.css")).toExternalForm());
         mainStage.setScene(scene);
+
         mainStage.show();
     }
 }

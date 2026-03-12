@@ -17,7 +17,7 @@
            fx:id="rootPane"
            prefWidth="640" prefHeight="360"
            minWidth="640" minHeight="360"
-           style="-fx-background-color: #0C0910;">
+           styleClass="root-pane">
 
       <AnchorPane
               prefWidth="640" prefHeight="38"
@@ -28,7 +28,7 @@
          <HBox
                  prefWidth="110" prefHeight="38"
                  alignment="CENTER"
-                 style="-fx-background-color: #0C0910; -fx-background-radius: 19; -fx-border-radius: 19; -fx-border-color: #FBFBFB; -fx-border-width: 1;"
+                 styleClass="timer-pill"
                  AnchorPane.topAnchor="0"
                  AnchorPane.leftAnchor="258">
 
@@ -37,7 +37,7 @@
                        fx:id="timerLabel"
                        text="20"
                        alignment="CENTER"
-                       style="-fx-text-fill: #FBFBFB; -fx-font-family: 'GeistMono NF'; -fx-font-size: 20px;"
+                       styleClass="timer-label"
                        StackPane.alignment="CENTER"/>
 
             </StackPane>
@@ -46,7 +46,7 @@
 
          <Label
                  fx:id="levelLabel"
-                 style="-fx-text-fill: #07DACC; -fx-font-family: 'Determination'; -fx-font-size: 24px;"
+                 styleClass="level-label"
                  AnchorPane.topAnchor="0"
                  AnchorPane.rightAnchor="36"
                  AnchorPane.bottomAnchor="0"/>
@@ -70,22 +70,22 @@
                  fx:id="inputField"
                  prefHeight="48"
                  maxWidth="Infinity"
-                 style="-fx-background-color: #0C0910; -fx-border-color: #888888; -fx-border-width: 1; -fx-border-radius: 0; -fx-background-radius: 0; -fx-text-fill: #FBFBFB; -fx-font-family: 'GeistMono NF'; -fx-font-size: 22px; -fx-padding: 0 46 0 12; -fx-highlight-fill: #07DACC; -fx-highlight-text-fill: #0C0910; -fx-display-caret: true;"
-                 onAction="#onHandleEnter"/>
+                 styleClass="input-field"
+                 onAction="#onEnterPressed"/>
 
          <Button
                  fx:id="submitButton"
                  prefHeight="30" prefWidth="34"
-                 style="-fx-background-color: #FBFBFB; -fx-background-radius: 8; -fx-border-radius: 8; -fx-cursor: hand; -fx-padding: 0;"
+                 styleClass="submit-button"
                  StackPane.alignment="CENTER_RIGHT"
-                 onAction="#onHandleSubmitButton">
+                 onAction="#onSubmitButtonClicked">
             <StackPane.margin>
                <Insets right="8"/>
             </StackPane.margin>
             <graphic>
                <Label
                        text=""
-                       style="-fx-text-fill: #0C0910; -fx-font-size: 17px; -fx-font-family: 'GeistMono NF';"/>
+                       styleClass="submit-button-icon"/>
             </graphic>
          </Button>
 
