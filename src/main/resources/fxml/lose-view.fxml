@@ -41,7 +41,7 @@
 
     <Label
             fx:id="hintLabel"
-            text="press RETURN to continue  ·  ESC to go back to main menu"
+            text="press ENTER to continue  ·  ESC to go back to main menu"
             styleClass="lose-hint"
             alignment="CENTER"
             maxWidth="Infinity"
