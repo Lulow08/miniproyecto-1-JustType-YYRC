@@ -64,9 +64,15 @@ public class GameController {
     }
 
     private void goToLoseScreen(String wrongAnswer) {
-        SceneManager.getInstance().setLoseData(gameLogic.getCurrentWord(), wrongAnswer);
+        gameView.whitenChars();
+
+        SceneManager sceneManager = SceneManager.getInstance();
+        sceneManager.setLoseData(gameLogic.getCurrentWord(), wrongAnswer);
+        sceneManager.setLoseWordDisplay(gameView.getWordDisplay());
+
+        sceneManager.setLoseData(gameLogic.getCurrentWord(), wrongAnswer);
         try {
-            SceneManager.getInstance().loadScene("lose-view.fxml");
+            sceneManager.loadScene("lose-view.fxml");
         } catch (IOException exception) {
             exception.printStackTrace();
         }
