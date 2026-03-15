@@ -3,6 +3,7 @@ package com.lulow.justtype.view;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -14,8 +15,8 @@ public final class SceneManager {
     private static SceneManager instance;
     private Stage mainStage;
 
-    private String loseWord   = "";
     private String loseAnswer = "";
+    private HBox loseWordDisplay = null;
 
     private SceneManager() {}
 
@@ -28,13 +29,18 @@ public final class SceneManager {
 
     public void setMainStage(Stage stage) { this.mainStage = stage; }
 
-    public void setLoseData(String word, String answer) {
-        this.loseWord   = word;
+    public void setLoseData(String answer) {
         this.loseAnswer = answer;
     }
 
-    public String getLoseWord()   { return loseWord; }
+    public void setLoseWordDisplay(HBox wordDisplay) { this.loseWordDisplay = wordDisplay; }
+
     public String getLoseAnswer() { return loseAnswer; }
+    public HBox getLoseWordDisplay() {
+        HBox node = loseWordDisplay;
+        loseWordDisplay = null;
+        return node;
+    }
 
     public void loadFonts() {
         Font.loadFont(getClass().getResourceAsStream("/fonts/Determination-Regular.ttf"), 14);
