@@ -22,15 +22,6 @@
             styleClass="lose-title"/>
 
     <Label
-            fx:id="wordLabel"
-            AnchorPane.topAnchor="78"
-            AnchorPane.leftAnchor="0"
-            AnchorPane.rightAnchor="0"
-            alignment="CENTER"
-            maxWidth="Infinity"
-            styleClass="word-label"/>
-
-    <Label
             fx:id="answerLabel"
             AnchorPane.topAnchor="190"
             AnchorPane.leftAnchor="0"
