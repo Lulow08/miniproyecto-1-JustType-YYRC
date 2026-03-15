@@ -29,10 +29,6 @@ public class GameLogic {
         currentLevel++;
     }
 
-    public void reset() {
-        currentLevel = 1;
-    }
-
     public int getMaxTimeForCurrentLevel() {
         return LevelConfig.getMaxTimeForLevel(currentLevel);
     }
