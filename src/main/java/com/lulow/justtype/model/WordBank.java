@@ -1,8 +1,8 @@
 package com.lulow.justtype.model;
 
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class WordBank {
 
@@ -41,35 +41,30 @@ public class WordBank {
             "metaprogramming", "parallelization", "functionality", "troubleshooting", "superstructure"
     };
 
-    private final Random random = new Random();
-    private final Set<String> used = new HashSet<>();
+    private List<String> deck = new ArrayList<>();
+    private LevelConfig.Tier currentTier = null;
+    private int index = 0;
 
     public String getRandomWord(int level) {
-        String[] tier = tierForLevel(level);
-        String word;
-        int attempts = 0;
+        LevelConfig.Tier tier = LevelConfig.getTierForLevel(level);
 
-        do {
-            word = tier[random.nextInt(tier.length)];
-            attempts++;
-        } while (used.contains(word) && attempts < tier.length);
-
-        if (attempts >= tier.length) {
-            clearTierUsed(tier);
+        if (tier != currentTier || index >= deck.size()) {
+            currentTier = tier;
+            deck = shuffled(tierForLevel(tier));
+            index = 0;
         }
 
-        used.add(word);
-        return word;
+        return deck.get(index++);
     }
 
-    private void clearTierUsed(String[] tier) {
-        for (String word : tier) {
-            used.remove(word);
-        }
+    private List<String> shuffled(String[] words) {
+        List<String> list = new ArrayList<>(List.of(words));
+        Collections.shuffle(list);
+        return list;
     }
 
-    private String[] tierForLevel(int level) {
-        return switch (LevelConfig.getTierForLevel(level)) {
+    private String[] tierForLevel(LevelConfig.Tier tier) {
+        return switch (tier) {
             case T1 -> TIER_1;
             case T2 -> TIER_2;
             case T3 -> TIER_3;
