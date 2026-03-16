@@ -1,8 +1,12 @@
 package com.lulow.justtype.view;
 
+import com.lulow.justtype.model.AudioClips;
+import com.lulow.justtype.model.AudioManager;
+import com.lulow.justtype.model.LevelConfig;
 import com.lulow.justtype.view.animations.OvershootAnimation;
 import com.lulow.justtype.view.animations.PressAnimation;
 import com.lulow.justtype.view.animations.SlideInAnimation;
+import com.lulow.justtype.view.particles.AshFX;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -24,10 +28,15 @@ public class GameView {
     private static final String CSS_TIMER_NORMAL   = "timer-label";
     private static final String CSS_TIMER_CRITICAL = "timer-label-critical";
 
-    private static final double WORD_TOP_MARGIN_NORMAL = 78;
-    private static final double WORD_TOP_MARGIN_SMALL = 92;
-    private static final double TIMER_PILL_SLIDE_FROM = -80;
-    private static final int CRITICAL_TIME_THRESHOLD = 5;
+    private static final double WORD_TOP_MARGIN_NORMAL  = 78;
+    private static final double WORD_TOP_MARGIN_SMALL   = 92;
+    private static final double TIMER_PILL_SLIDE_FROM   = -80;
+    private static final int    CRITICAL_TIME_THRESHOLD = 5;
+
+    private static final int    ASH_T4_PARTICLES = 1;
+    private static final double ASH_T4_SPEED     = 1.2;
+    private static final int    ASH_T5_PARTICLES = 1;
+    private static final double ASH_T5_SPEED     = 2.0;
 
     private final HBox      wordDisplay;
     private final HBox      timerPill;
@@ -42,8 +51,13 @@ public class GameView {
 
     private final TimerArc           timerArc;
     private final BackgroundGradient backgroundGradient;
+    private final AshFX              ashFX;
 
-    public GameView(HBox wordDisplay, Label levelLabel, Label timerLabel, StackPane timerPane, AnchorPane rootPane, HBox timerPill ) {
+    private LevelConfig.Tier lastAshTier   = null;
+    private boolean          wasCritical   = false;
+
+    public GameView(HBox wordDisplay, Label levelLabel, Label timerLabel,
+                    StackPane timerPane, AnchorPane rootPane, HBox timerPill) {
         this.wordDisplay = wordDisplay;
         this.timerPill   = timerPill;
         this.levelLabel  = levelLabel;
@@ -52,6 +66,7 @@ public class GameView {
 
         this.timerArc           = new TimerArc();
         this.backgroundGradient = new BackgroundGradient(rootPane);
+        this.ashFX              = new AshFX(rootPane, rootPane.getPrefWidth(), rootPane.getPrefHeight());
 
         setupTimerArc();
     }
@@ -60,17 +75,14 @@ public class GameView {
         timerPane.getChildren().add(0, timerArc.getContainer());
         Node arcNode = timerPane.getChildren().get(0);
         StackPane.setAlignment(arcNode, Pos.CENTER_LEFT);
-        StackPane.setMargin(arcNode, new Insets(0,0,0,8));
+        StackPane.setMargin(arcNode, new Insets(0, 0, 0, 8));
     }
 
     public void setupAnimations(TextField inputField, Button submitButton) {
-        inputAnimation = new PressAnimation(inputField, 0.96);
+        inputAnimation  = new PressAnimation(inputField, 0.96);
         buttonAnimation = new PressAnimation(submitButton, 0.9);
-
-        submitButton.setOnMousePressed(event  -> buttonAnimation.play());
+        submitButton.setOnMousePressed(event -> buttonAnimation.play());
     }
-
-    public HBox getWordDisplay() { return wordDisplay; }
 
     public void playInputAnimation() { if (inputAnimation != null) inputAnimation.play(); }
 
@@ -81,7 +93,10 @@ public class GameView {
         buttonAnimation.play();
     }
 
-    public void initTimer(int totalSeconds) { timerArc.init(totalSeconds); }
+    public void initTimer(int totalSeconds) {
+        wasCritical = false;
+        timerArc.init(totalSeconds);
+    }
 
     public void renderWord(char[] chars, int level) {
         String activeCharStyle = level > 35 ? CSS_CHAR_SMALL : CSS_CHAR_NORMAL;
@@ -105,8 +120,9 @@ public class GameView {
             String colorClass;
             if (i < typed.length()) {
                 colorClass = (typed.charAt(i) == target.charAt(i)) ? CSS_CHAR_CORRECT : CSS_CHAR_WRONG;
-            } else { colorClass = CSS_CHAR_NEUTRAL; }
-
+            } else {
+                colorClass = CSS_CHAR_NEUTRAL;
+            }
             setCharColor(charLabels[i], colorClass);
         }
     }
@@ -118,19 +134,40 @@ public class GameView {
         }
     }
 
+    public HBox getWordDisplay() { return wordDisplay; }
+
     public void updateHUD(int level, int secondsLeft) {
         levelLabel.setText("#" + level);
-
         timerLabel.setText(String.valueOf(secondsLeft));
 
         boolean critical = secondsLeft <= CRITICAL_TIME_THRESHOLD;
         timerLabel.getStyleClass().removeAll(CSS_TIMER_NORMAL, CSS_TIMER_CRITICAL);
         timerLabel.getStyleClass().add(critical ? CSS_TIMER_CRITICAL : CSS_TIMER_NORMAL);
 
-        if (critical) { new OvershootAnimation(timerLabel, 1.3, 0.94).play(); }
+        if (critical) {
+            new OvershootAnimation(timerLabel, 1.3, 0.94).play();
+            AudioManager.getInstance().playSfx(AudioClips.CRITICAL_BEEP);
+        }
 
+        wasCritical = critical;
         timerArc.update(secondsLeft, critical);
         backgroundGradient.updateForLevel(level);
+    }
+
+    public void updateAshEmitter(int level) {
+        LevelConfig.Tier tier = LevelConfig.getTierForLevel(level);
+        if (tier == lastAshTier) return;
+        lastAshTier = tier;
+
+        if (tier == LevelConfig.Tier.T4) {
+            ashFX.setIntensity(ASH_T4_PARTICLES, ASH_T4_SPEED);
+            ashFX.play(Double.MAX_VALUE);
+        } else if (tier == LevelConfig.Tier.T5) {
+            ashFX.setIntensity(ASH_T5_PARTICLES, ASH_T5_SPEED);
+            ashFX.play(Double.MAX_VALUE);
+        } else {
+            ashFX.stop();
+        }
     }
 
     private void setCharColor(Label charLabel, String colorClass) {
