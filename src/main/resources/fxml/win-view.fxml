@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane
+        xmlns="http://javafx.com/javafx/17"
+        xmlns:fx="http://javafx.com/fxml/1"
+        fx:controller="com.lulow.justtype.controller.WinController"
+        fx:id="rootPane"
+        prefWidth="640" prefHeight="360"
+        styleClass="root-pane">
+
+    <Label
+            fx:id="titleLabel"
+            text="YOU WIN"
+            AnchorPane.topAnchor="16"
+            AnchorPane.leftAnchor="0"
+            AnchorPane.rightAnchor="0"
+            alignment="CENTER"
+            maxWidth="Infinity"
+            styleClass="win-title"/>
+
+    <Label
+            fx:id="hintLabel"
+            text="press ENTER to play again  ·  ESC to go back to main menu"
+            styleClass="lose-hint"
+            alignment="CENTER"
+            maxWidth="Infinity"
+            AnchorPane.bottomAnchor="16"
+            AnchorPane.leftAnchor="0"
+            AnchorPane.rightAnchor="0"/>
+
+</AnchorPane>
