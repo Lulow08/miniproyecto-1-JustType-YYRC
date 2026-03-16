@@ -74,18 +74,12 @@
 .char-neutral  { -fx-text-fill: #888888; }
 .char-correct  { -fx-text-fill: #07DACC; }
 .char-wrong    { -fx-text-fill: #FF4C4C; }
-.char-white { -fx-text-fill: #FBFBFB; }
+.char-white    { -fx-text-fill: #FBFBFB; }
 
 .lose-title {
     -fx-text-fill: #FF4C4C;
     -fx-font-family: 'Determination';
     -fx-font-size: 42px;
-}
-
-.word-label {
-    -fx-text-fill: #FBFBFB;
-    -fx-font-family: 'Determination';
-    -fx-font-size: 76px;
 }
 
 .lose-answer {
@@ -98,4 +92,28 @@
     -fx-text-fill: #888888;
     -fx-font-family: 'GeistMono NF';
     -fx-font-size: 12px;
+}
+
+.menu-item-active {
+    -fx-text-fill: #07DACC;
+    -fx-font-family: 'GeistMono NF';
+    -fx-font-size: 18px;
+}
+
+.menu-item-inactive {
+    -fx-text-fill: #888888;
+    -fx-font-family: 'GeistMono NF';
+    -fx-font-size: 18px;
+}
+
+.menu-indicator {
+    -fx-text-fill: #07DACC;
+    -fx-font-family: 'GeistMono NF';
+    -fx-font-size: 12px;
+}
+
+.win-title {
+    -fx-text-fill: #FFD700;
+    -fx-font-family: 'Determination';
+    -fx-font-size: 42px;
 }
