@@ -1,5 +1,7 @@
 package com.lulow.justtype.controller;
 
+import com.lulow.justtype.model.AudioClips;
+import com.lulow.justtype.model.AudioManager;
 import com.lulow.justtype.model.GameLogic;
 import com.lulow.justtype.model.timer.GameTimer;
 import com.lulow.justtype.view.SceneManager;
@@ -17,38 +19,43 @@ import java.io.IOException;
 
 public class GameController {
 
-    @FXML private TextField inputField;
-    @FXML private HBox      wordDisplay;
-    @FXML private HBox      timerPill;
-    @FXML private Label     levelLabel;
-    @FXML private Label     timerLabel;
-    @FXML private Button    submitButton;
+    @FXML private TextField  inputField;
+    @FXML private HBox       wordDisplay;
+    @FXML private HBox       timerPill;
+    @FXML private Label      levelLabel;
+    @FXML private Label      timerLabel;
+    @FXML private Button     submitButton;
     @FXML private AnchorPane rootPane;
     @FXML private StackPane  timerPane;
 
-    private GameLogic gameLogic;
-    private GameView gameView;
-    private GameTimer gameTimer;
+    private GameLogic  gameLogic;
+    private GameView   gameView;
+    private GameTimer  gameTimer;
     private ConfettiFX confetti;
 
     @FXML
     public void initialize() {
         gameLogic = new GameLogic();
-        gameView = new GameView(wordDisplay, levelLabel, timerLabel, timerPane, rootPane, timerPill);
+        gameView  = new GameView(wordDisplay, levelLabel, timerLabel, timerPane, rootPane, timerPill);
         gameTimer = new GameTimer(this::onTick, this::onTimeUp);
-        confetti = new ConfettiFX(rootPane, rootPane.getPrefWidth(), rootPane.getPrefHeight());
+        confetti  = new ConfettiFX(rootPane, rootPane.getPrefWidth(), rootPane.getPrefHeight());
 
         gameView.setupAnimations(inputField, submitButton);
 
-        inputField.textProperty().addListener((observable, oldText, newText) ->
-                gameView.colorizeChars(newText, gameLogic.getCurrentWord())
-        );
+        inputField.textProperty().addListener((obs, oldText, newText) -> {
+            gameView.colorizeChars(newText, gameLogic.getCurrentWord());
+            if (newText.length() != oldText.length()) {
+                AudioManager.getInstance().playSfx(AudioClips.KEY_PRESS);
+            }
+        });
+
+        AudioManager.getInstance().playMusic(AudioClips.GAME_MUSIC, true);
 
         startNewGame();
     }
 
     @FXML private void onSubmitButtonClicked() { submitAnswer(inputField.getText()); }
-    @FXML private void onEnterPressed() { submitAnswer(inputField.getText()); }
+    @FXML private void onEnterPressed()        { submitAnswer(inputField.getText()); }
 
     private void submitAnswer(String input) {
         gameTimer.stop();
@@ -57,24 +64,35 @@ public class GameController {
         boolean isCorrect = gameLogic.processAnswer(input);
 
         if (isCorrect) {
-            gameLogic.levelUp();
-            confetti.play(0.02);
-            nextRound();
-        } else { goToLoseScreen(input); }
+            AudioManager.getInstance().playSfx(AudioClips.CRUNCH);
+            if (gameLogic.hasWon()) {
+                goToWinScreen();
+            } else {
+                confetti.play(0.02);
+                nextRound();
+            }
+        } else {
+            goToLoseScreen(input);
+        }
     }
 
     private void goToLoseScreen(String wrongAnswer) {
         gameView.whitenChars();
-
-        SceneManager sceneManager = SceneManager.getInstance();
-        sceneManager.setLoseData(wrongAnswer);
-        sceneManager.setLoseWordDisplay(gameView.getWordDisplay());
-
-        sceneManager.setLoseData(wrongAnswer);
         try {
-            sceneManager.loadScene("lose-view.fxml");
-        } catch (IOException exception) {
-            exception.printStackTrace();
+            LoseController loseController = SceneManager.getInstance().loadScene("lose-view.fxml");
+            loseController.setup(gameLogic.getCurrentWord(), wrongAnswer, gameView.getWordDisplay());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void goToWinScreen() {
+        gameView.whitenChars();
+        try {
+            WinController winController = SceneManager.getInstance().loadScene("win-view.fxml");
+            winController.setup(gameView.getWordDisplay());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -108,5 +126,6 @@ public class GameController {
     private void refreshUI() {
         gameView.renderWord(gameLogic.getCurrentChars(), gameLogic.getCurrentLevel());
         gameView.updateHUD(gameLogic.getCurrentLevel(), gameLogic.getMaxTimeForCurrentLevel());
+        gameView.updateAshEmitter(gameLogic.getCurrentLevel());
     }
 }
