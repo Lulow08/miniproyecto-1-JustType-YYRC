@@ -29,8 +29,8 @@ public class OvershootAnimation extends AnimatorAdapter {
         settle.setToX(1.0);
         settle.setToY(1.0);
 
-        hold.setOnFinished(e -> shrink.play());
-        shrink.setOnFinished(e -> settle.play());
+        hold.setOnFinished(finishEvent -> shrink.play());
+        shrink.setOnFinished(finishEvent -> settle.play());
     }
 
     @Override
