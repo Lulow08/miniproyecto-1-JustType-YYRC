@@ -22,6 +22,16 @@
             styleClass="win-title"/>
 
     <Label
+            fx:id="statsLabel"
+            text=""
+            AnchorPane.topAnchor="192"
+            AnchorPane.leftAnchor="0"
+            AnchorPane.rightAnchor="0"
+            alignment="CENTER"
+            maxWidth="Infinity"
+            styleClass="win-stats"/>
+
+    <Label
             fx:id="hintLabel"
             text="press ENTER to play again  ·  ESC to go back to main menu"
             styleClass="lose-hint"
