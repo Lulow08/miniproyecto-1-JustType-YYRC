@@ -1,6 +1,7 @@
 package com.lulow.justtype.view.particles;
 
 import com.lulow.justtype.model.particles.ConfettiParticle;
+import com.lulow.justtype.view.Theme;
 import javafx.animation.AnimationTimer;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -13,20 +14,14 @@ import java.util.Random;
 
 public class ConfettiFX extends ParticleEmitterAdapter {
 
-    private static final int    PARTICLES_PER_SPAWN  = 4;
-    private static final double MIN_OPACITY          = 0.4;
-    private static final double OPACITY_VARIANCE     = 0.6;
-    private static final double MIN_PARTICLE_SIZE    = 6.0;
-    private static final double MAX_PARTICLE_SIZE    = 10.0;
-    private static final double X_START_PADDING      = 2.0;
-    private static final double Y_START_PADDING      = 10.0;
-    private static final double OFF_SCREEN_THRESHOLD = 50.0;
-
-    private static final Color[] PALETTE = {
-            Color.web("#FF4C4C"), Color.web("#07DACC"), Color.web("#FFD700"),
-            Color.web("#FF9900"), Color.web("#CC44FF"), Color.web("#44AAFF"),
-            Color.web("#FF66AA"), Color.web("#AAFFAA")
-    };
+    private static final int    PARTICLES_PER_SPAWN   = 4;
+    private static final double MIN_OPACITY           = 0.4;
+    private static final double OPACITY_VARIANCE      = 0.6;
+    private static final double MIN_PARTICLE_SIZE     = 6.0;
+    private static final double MAX_PARTICLE_SIZE     = 10.0;
+    private static final double X_START_PADDING       = 2.0;
+    private static final double Y_START_PADDING       = 10.0;
+    private static final double OFF_SCREEN_THRESHOLD  = 50.0;
 
     private final Pane   layer;
     private final double screenWidth;
@@ -35,9 +30,9 @@ public class ConfettiFX extends ParticleEmitterAdapter {
 
     private final List<ConfettiParticle> particles = new ArrayList<>();
 
-    private boolean emitting     = false;
-    private long    emitEndTime  = 0;
-    private boolean colorful     = false;
+    private boolean emitting    = false;
+    private long    emitEndTime = 0;
+    private boolean colorful    = false;
 
     public ConfettiFX(Pane layer, double screenWidth, double screenHeight) {
         this.layer        = layer;
@@ -65,18 +60,18 @@ public class ConfettiFX extends ParticleEmitterAdapter {
     }
 
     private void spawnParticles() {
-        for (int i = 0; i < PARTICLES_PER_SPAWN; i++) {
+        for (int spawnIndex = 0; spawnIndex < PARTICLES_PER_SPAWN; spawnIndex++) {
             int    direction = random.nextBoolean() ? 1 : -1;
             double xPos      = (direction == 1) ? screenWidth - X_START_PADDING : X_START_PADDING;
             double yPos      = screenHeight - Y_START_PADDING;
             double size      = MIN_PARTICLE_SIZE + random.nextDouble() * (MAX_PARTICLE_SIZE - MIN_PARTICLE_SIZE);
 
-            Color color = colorful
-                    ? PALETTE[random.nextInt(PALETTE.length)]
+            Color particleColor = colorful
+                    ? Theme.CONFETTI_PALETTE[random.nextInt(Theme.CONFETTI_PALETTE.length)]
                     : Color.WHITE;
 
             Rectangle render = new Rectangle(size, size);
-            render.setFill(color);
+            render.setFill(particleColor);
             render.setOpacity(MIN_OPACITY + random.nextDouble() * OPACITY_VARIANCE);
             render.setX(xPos);
             render.setY(yPos);
@@ -100,13 +95,13 @@ public class ConfettiFX extends ParticleEmitterAdapter {
     }
 
     private void updateParticles() {
-        Iterator<ConfettiParticle> it = particles.iterator();
-        while (it.hasNext()) {
-            ConfettiParticle p = it.next();
-            p.update();
-            if (p.getYPos() > screenHeight + OFF_SCREEN_THRESHOLD) {
-                layer.getChildren().remove(p.getRender());
-                it.remove();
+        Iterator<ConfettiParticle> iterator = particles.iterator();
+        while (iterator.hasNext()) {
+            ConfettiParticle particle = iterator.next();
+            particle.update();
+            if (particle.getYPos() > screenHeight + OFF_SCREEN_THRESHOLD) {
+                layer.getChildren().remove(particle.getRender());
+                iterator.remove();
             }
         }
     }

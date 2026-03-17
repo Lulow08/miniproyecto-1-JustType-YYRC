@@ -7,7 +7,7 @@ import javafx.util.Duration;
 public class GameTimer extends TimerAdapter {
 
     private Timeline timeline;
-    private int secondsLeft;
+    private int      secondsLeft;
 
     private final Runnable onTick;
     private final Runnable onTimeUp;
@@ -22,7 +22,7 @@ public class GameTimer extends TimerAdapter {
         stop();
         secondsLeft = seconds;
 
-        timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+        timeline = new Timeline(new KeyFrame(Duration.seconds(1), keyFrameEvent -> {
             secondsLeft--;
             if (secondsLeft <= 0) {
                 secondsLeft = 0;

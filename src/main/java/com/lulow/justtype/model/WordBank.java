@@ -6,55 +6,55 @@ import java.util.List;
 
 public class WordBank {
 
-    private static final String[] TIER_1 = {
+    private static final String[] BEGINNER_WORDS = {
             "class", "git", "run", "bool", "IDEA",
             "star", "java", "fast", "game", "cast",
             "Type", "tree", "zip", "model", "word",
             "bug", "View", "main", "virus", "root"
     };
 
-    private static final String[] TIER_2 = {
+    private static final String[] EASY_WORDS = {
             "integer", "commit", "Controller", "buffer", "Syntax",
             "module", "compile", "pointer", "interface", "console",
             "binary", "directory", "Source", "PACKAGE", "virtual",
             "Lambda", "String", "TERMINAL", "deploy", "Library"
     };
 
-    private static final String[] TIER_3 = {
+    private static final String[] MEDIUM_WORDS = {
             "framework", "Algorithm", "database", "endpoint", "CallBack",
             "recursion", "INSTANCE", "MetaData", "argument", "protocol",
             "middleware", "BreakPoint", "container", "gradient", "Heritage",
             "UNIVERSE", "velocity", "frontend", "Backend", "operator"
     };
 
-    private static final String[] TIER_4 = {
+    private static final String[] HARD_WORDS = {
             "asynchronous", "polymorphism", "abstraction", "inheritance", "repository",
-            "microservices", "concurrency", "deployment", "dependency", "environment",
-            "performance", "transaction", "encryption", "throughput", "redundancy",
-            "javascript", "reflection", "serialized", "immutable", "validation"
+            "MicroServices", "concurrency", "deployment", "Dependency", "Environment",
+            "performance", "transaction", "Encryption", "throughput", "redundancy",
+            "JavaScript", "reflection", "Serialized", "IMMUTABLE", "validation"
     };
 
-    private static final String[] TIER_5 = {
+    private static final String[] EXPERT_WORDS = {
             "authentication", "infrastructure", "multithreading", "implementation", "uninterrupted",
             "synchronization", "decentralized", "encapsulation", "orchestration", "compatibility",
             "cryptography", "standardization", "maintainability", "vulnerability", "instantaneous",
             "metaprogramming", "parallelization", "functionality", "troubleshooting", "superstructure"
     };
 
-    private List<String> deck = new ArrayList<>();
+    private List<String>     deck        = new ArrayList<>();
     private LevelConfig.Tier currentTier = null;
-    private int index = 0;
+    private int              deckIndex   = 0;
 
     public String getRandomWord(int level) {
         LevelConfig.Tier tier = LevelConfig.getTierForLevel(level);
 
-        if (tier != currentTier || index >= deck.size()) {
+        if (tier != currentTier || deckIndex >= deck.size()) {
             currentTier = tier;
-            deck = shuffled(tierForLevel(tier));
-            index = 0;
+            deck        = shuffled(wordsForTier(tier));
+            deckIndex   = 0;
         }
 
-        return deck.get(index++);
+        return deck.get(deckIndex++);
     }
 
     private List<String> shuffled(String[] words) {
@@ -63,13 +63,13 @@ public class WordBank {
         return list;
     }
 
-    private String[] tierForLevel(LevelConfig.Tier tier) {
+    private String[] wordsForTier(LevelConfig.Tier tier) {
         return switch (tier) {
-            case T1 -> TIER_1;
-            case T2 -> TIER_2;
-            case T3 -> TIER_3;
-            case T4 -> TIER_4;
-            default -> TIER_5;
+            case BEGINNER -> BEGINNER_WORDS;
+            case EASY     -> EASY_WORDS;
+            case MEDIUM   -> MEDIUM_WORDS;
+            case HARD     -> HARD_WORDS;
+            default       -> EXPERT_WORDS;
         };
     }
 }

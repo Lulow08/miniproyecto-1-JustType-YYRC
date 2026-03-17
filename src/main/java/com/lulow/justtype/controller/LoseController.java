@@ -9,47 +9,52 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class LoseController {
+
+    private static final Logger LOGGER = Logger.getLogger(LoseController.class.getName());
 
     @FXML private AnchorPane rootPane;
     @FXML private Label      titleLabel;
     @FXML private Label      answerLabel;
+    @FXML private Label      statsLabel;
     @FXML private Label      hintLabel;
 
     private LoseView loseView;
 
     @FXML
     public void initialize() {
-        loseView = new LoseView(rootPane, titleLabel, answerLabel, hintLabel);
+        loseView = new LoseView(rootPane, titleLabel, answerLabel, statsLabel, hintLabel);
 
         rootPane.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.ENTER)  onContinue();
+            if (event.getCode() == KeyCode.ENTER)  onPlayAgain();
             if (event.getCode() == KeyCode.ESCAPE) onGoMenu();
         });
 
-        rootPane.sceneProperty().addListener((obs, oldScene, newScene) -> {
+        rootPane.sceneProperty().addListener((observable, oldScene, newScene) -> {
             if (newScene != null) rootPane.requestFocus();
         });
     }
 
-    public void setup(String wrongAnswer, HBox wordDisplay) {
-        loseView.setup(wrongAnswer, wordDisplay);
+    public void setup(int completedLevels, String playerAnswer, HBox wordDisplay) {
+        loseView.setup(completedLevels, playerAnswer, wordDisplay);
     }
 
-    private void onContinue() {
+    private void onPlayAgain() {
         try {
-            SceneManager.getInstance().loadScene("game-view.fxml");
+            SceneManager.getInstance().switchScene("game-view.fxml");
         } catch (IOException exception) {
-            exception.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Failed to load game screen", exception);
         }
     }
 
     private void onGoMenu() {
         try {
-            SceneManager.getInstance().loadScene("menu-view.fxml");
+            SceneManager.getInstance().switchScene("menu-view.fxml");
         } catch (IOException exception) {
-            exception.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Failed to load menu screen", exception);
         }
     }
 }

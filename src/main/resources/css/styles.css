@@ -61,6 +61,24 @@
     -fx-font-family: 'GeistMono NF';
 }
 
+.reset-button {
+    -fx-background-color: #1e1428;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-cursor: hand;
+    -fx-padding: 0;
+}
+
+.reset-button:hover {
+    -fx-background-color: #291934;
+}
+
+.reset-button-icon {
+    -fx-text-fill: #5a4a72;
+    -fx-font-size: 14px;
+    -fx-font-family: 'GeistMono NF';
+}
+
 .char-normal {
     -fx-font-family: 'Determination';
     -fx-font-size: 76px;
@@ -76,16 +94,34 @@
 .char-wrong    { -fx-text-fill: #FF4C4C; }
 .char-white    { -fx-text-fill: #FBFBFB; }
 
+.feedback-ok {
+    -fx-text-fill: #07DACC;
+    -fx-font-family: 'Determination';
+    -fx-font-size: 14px;
+}
+
+.feedback-error {
+    -fx-text-fill: #FF4C4C;
+    -fx-font-family: 'Determination';
+    -fx-font-size: 14px;
+}
+
 .lose-title {
     -fx-text-fill: #FF4C4C;
     -fx-font-family: 'Determination';
     -fx-font-size: 42px;
 }
 
+.lose-stats {
+    -fx-text-fill: #07DACC;
+    -fx-font-family: 'GeistMono NF';
+    -fx-font-size: 13px;
+}
+
 .lose-answer {
     -fx-text-fill: #FBFBFB;
     -fx-font-family: 'GeistMono NF';
-    -fx-font-size: 16px;
+    -fx-font-size: 13px;
 }
 
 .lose-hint {
@@ -94,26 +130,34 @@
     -fx-font-size: 12px;
 }
 
+.win-title {
+    -fx-text-fill: #FFD700;
+    -fx-font-family: 'Determination';
+    -fx-font-size: 42px;
+}
+
+.win-stats {
+    -fx-text-fill: #07DACC;
+    -fx-font-family: 'GeistMono NF';
+    -fx-font-size: 13px;
+}
+
 .menu-item-active {
     -fx-text-fill: #07DACC;
     -fx-font-family: 'GeistMono NF';
     -fx-font-size: 18px;
+    -fx-cursor: hand;
 }
 
 .menu-item-inactive {
     -fx-text-fill: #888888;
     -fx-font-family: 'GeistMono NF';
     -fx-font-size: 18px;
+    -fx-cursor: hand;
 }
 
 .menu-indicator {
     -fx-text-fill: #07DACC;
     -fx-font-family: 'GeistMono NF';
     -fx-font-size: 12px;
-}
-
-.win-title {
-    -fx-text-fill: #FFD700;
-    -fx-font-family: 'Determination';
-    -fx-font-size: 42px;
 }

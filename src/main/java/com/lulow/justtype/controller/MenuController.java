@@ -13,8 +13,12 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class MenuController {
+
+    private static final Logger LOGGER = Logger.getLogger(MenuController.class.getName());
 
     @FXML private AnchorPane rootPane;
     @FXML private HBox       titleDisplay;
@@ -24,22 +28,49 @@ public class MenuController {
     @FXML private Label      exitIndicator;
 
     private MenuView      menuView;
-    private MenuSelection selection = MenuSelection.NEW_GAME;
+    private MenuSelection currentSelection = MenuSelection.NEW_GAME;
 
     @FXML
     public void initialize() {
         menuView = new MenuView(rootPane, titleDisplay,
                 newGameLabel, exitLabel, newGameIndicator, exitIndicator);
 
-        menuView.setSelection(selection);
+        menuView.setSelection(currentSelection);
         menuView.start();
+        setupMouseEvents();
 
         AudioManager.getInstance().playMusic(AudioClips.MENU_MUSIC, true);
 
         rootPane.setOnKeyPressed(event -> handleKey(event.getCode()));
-        rootPane.sceneProperty().addListener((obs, oldScene, newScene) -> {
+        rootPane.sceneProperty().addListener((observable, oldScene, newScene) -> {
             if (newScene != null) rootPane.requestFocus();
         });
+    }
+
+    private void setupMouseEvents() {
+        newGameLabel.setOnMouseClicked(event -> {
+            currentSelection = MenuSelection.NEW_GAME;
+            menuView.setSelection(currentSelection);
+            confirm();
+        });
+
+        newGameLabel.setOnMouseEntered(event -> {
+            if (currentSelection != MenuSelection.NEW_GAME) newGameLabel.setOpacity(0.7);
+        });
+
+        newGameLabel.setOnMouseExited(event -> newGameLabel.setOpacity(1.0));
+
+        exitLabel.setOnMouseClicked(event -> {
+            currentSelection = MenuSelection.EXIT;
+            menuView.setSelection(currentSelection);
+            confirm();
+        });
+
+        exitLabel.setOnMouseEntered(event -> {
+            if (currentSelection != MenuSelection.EXIT) exitLabel.setOpacity(0.7);
+        });
+
+        exitLabel.setOnMouseExited(event -> exitLabel.setOpacity(1.0));
     }
 
     private void handleKey(KeyCode code) {
@@ -50,15 +81,15 @@ public class MenuController {
     }
 
     private void toggleSelection() {
-        selection = (selection == MenuSelection.NEW_GAME)
+        currentSelection = (currentSelection == MenuSelection.NEW_GAME)
                 ? MenuSelection.EXIT
                 : MenuSelection.NEW_GAME;
-        menuView.setSelection(selection);
+        menuView.setSelection(currentSelection);
     }
 
     private void confirm() {
         menuView.stop();
-        if (selection == MenuSelection.NEW_GAME) {
+        if (currentSelection == MenuSelection.NEW_GAME) {
             goToGame();
         } else {
             Platform.exit();
@@ -67,9 +98,9 @@ public class MenuController {
 
     private void goToGame() {
         try {
-            SceneManager.getInstance().loadScene("game-view.fxml");
+            SceneManager.getInstance().switchScene("game-view.fxml");
         } catch (IOException exception) {
-            exception.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Failed to load game screen", exception);
         }
     }
 }

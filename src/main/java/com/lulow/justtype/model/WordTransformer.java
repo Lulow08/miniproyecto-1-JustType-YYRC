@@ -6,22 +6,23 @@ import java.util.List;
 
 public class WordTransformer {
 
-    private static final int MIN_UPPERCASE = 1;
-    private static final int MAX_UPPERCASE = 3;
+    private static final int MIN_UPPERCASE_COUNT = 1;
+    private static final int MAX_UPPERCASE_COUNT = 3;
 
     public String applyTier5Casing(String word) {
         char[] chars = word.toLowerCase().toCharArray();
 
-        int count = MIN_UPPERCASE + (int)(Math.random() * (MAX_UPPERCASE - MIN_UPPERCASE + 1));
-        count = Math.min(count, chars.length);
+        int uppercaseCount = MIN_UPPERCASE_COUNT
+                + (int)(Math.random() * (MAX_UPPERCASE_COUNT - MIN_UPPERCASE_COUNT + 1));
+        uppercaseCount = Math.min(uppercaseCount, chars.length);
 
         List<Integer> indices = new ArrayList<>();
-        for (int i = 0; i < chars.length; i++) indices.add(i);
+        for (int index = 0; index < chars.length; index++) indices.add(index);
         Collections.shuffle(indices);
 
-        for (int i = 0; i < count; i++) {
-            int idx = indices.get(i);
-            chars[idx] = Character.toUpperCase(chars[idx]);
+        for (int pos = 0; pos < uppercaseCount; pos++) {
+            int targetIndex = indices.get(pos);
+            chars[targetIndex] = Character.toUpperCase(chars[targetIndex]);
         }
 
         return new String(chars);

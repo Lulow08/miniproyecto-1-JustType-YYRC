@@ -14,9 +14,9 @@ public class TimerArc {
     private static final double RADIUS         = 8.0;
     private static final double FULL_CIRCLE    = 360.0;
 
-    private final Arc arc;
+    private final Arc   arc;
     private final Group container;
-    private int totalSeconds;
+    private int         totalSeconds;
 
     public TimerArc() {
         arc = new Arc();

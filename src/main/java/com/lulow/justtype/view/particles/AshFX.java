@@ -13,15 +13,15 @@ import java.util.Random;
 
 public class AshFX extends ParticleEmitterAdapter {
 
-    private static final double MIN_SIZE         = 3.0;
-    private static final double MAX_SIZE         = 7.0;
-    private static final double MIN_OPACITY      = 0.4;
-    private static final double MAX_OPACITY      = 0.8;
-    private static final double MIN_SPEED        = 0.09;
-    private static final double MAX_SPEED        = 0.4;
-    private static final double MAX_DRIFT        = 0.1;
-    private static final double MIN_FADE_RATE    = 0.002;
-    private static final double MAX_FADE_RATE    = 0.006;
+    private static final double MIN_SIZE      = 3.0;
+    private static final double MAX_SIZE      = 7.0;
+    private static final double MIN_OPACITY   = 0.4;
+    private static final double MAX_OPACITY   = 0.8;
+    private static final double MIN_SPEED     = 0.09;
+    private static final double MAX_SPEED     = 0.4;
+    private static final double MAX_DRIFT     = 0.1;
+    private static final double MIN_FADE_RATE = 0.002;
+    private static final double MAX_FADE_RATE = 0.006;
 
     private final Pane   layer;
     private final double screenWidth;
@@ -30,9 +30,9 @@ public class AshFX extends ParticleEmitterAdapter {
 
     private final List<AshParticle> particles = new ArrayList<>();
 
-    private boolean active             = false;
-    private int     particlesPerFrame  = 1;
-    private double  speedMultiplier    = 0.5;
+    private boolean active            = false;
+    private int     particlesPerFrame = 1;
+    private double  speedMultiplier   = 0.5;
 
     public AshFX(Pane layer, double screenWidth, double screenHeight) {
         this.layer        = layer;
@@ -60,41 +60,41 @@ public class AshFX extends ParticleEmitterAdapter {
     }
 
     @Override
-    public void setIntensity(int particlesPerFrame, double speedMultiplier) {
-        this.particlesPerFrame = particlesPerFrame;
-        this.speedMultiplier   = speedMultiplier;
+    public void setIntensity(int newParticlesPerFrame, double newSpeedMultiplier) {
+        this.particlesPerFrame = newParticlesPerFrame;
+        this.speedMultiplier   = newSpeedMultiplier;
     }
 
     private void spawnBatch() {
-        for (int i = 0; i < particlesPerFrame; i++) {
-            double x       = random.nextDouble() * screenWidth;
-            double y       = screenHeight;
-            double size    = MIN_SIZE + random.nextDouble() * (MAX_SIZE - MIN_SIZE);
-            double opacity = MIN_OPACITY + random.nextDouble() * (MAX_OPACITY - MIN_OPACITY);
-            double speed   = (MIN_SPEED + random.nextDouble() * (MAX_SPEED - MIN_SPEED)) * speedMultiplier;
-            double drift   = (random.nextDouble() * 2 - 1) * MAX_DRIFT;
-            double fade    = MIN_FADE_RATE + random.nextDouble() * (MAX_FADE_RATE - MIN_FADE_RATE);
+        for (int spawnIndex = 0; spawnIndex < particlesPerFrame; spawnIndex++) {
+            double xPos     = random.nextDouble() * screenWidth;
+            double yPos     = screenHeight;
+            double size     = MIN_SIZE + random.nextDouble() * (MAX_SIZE - MIN_SIZE);
+            double opacity  = MIN_OPACITY + random.nextDouble() * (MAX_OPACITY - MIN_OPACITY);
+            double speed    = (MIN_SPEED + random.nextDouble() * (MAX_SPEED - MIN_SPEED)) * speedMultiplier;
+            double drift    = (random.nextDouble() * 2 - 1) * MAX_DRIFT;
+            double fadeRate = MIN_FADE_RATE + random.nextDouble() * (MAX_FADE_RATE - MIN_FADE_RATE);
 
             Rectangle render = new Rectangle(size, size);
             render.setFill(Color.WHITE);
             render.setOpacity(opacity);
-            render.setX(x);
-            render.setY(y);
+            render.setX(xPos);
+            render.setY(yPos);
 
-            AshParticle particle = new AshParticle(x, y, drift, speed, opacity, fade, render);
+            AshParticle particle = new AshParticle(xPos, yPos, drift, speed, opacity, fadeRate, render);
             particles.add(particle);
             layer.getChildren().add(render);
         }
     }
 
     private void updateParticles() {
-        Iterator<AshParticle> it = particles.iterator();
-        while (it.hasNext()) {
-            AshParticle p = it.next();
-            p.update();
-            if (p.isDead()) {
-                layer.getChildren().remove(p.getRender());
-                it.remove();
+        Iterator<AshParticle> iterator = particles.iterator();
+        while (iterator.hasNext()) {
+            AshParticle particle = iterator.next();
+            particle.update();
+            if (particle.isDead()) {
+                layer.getChildren().remove(particle.getRender());
+                iterator.remove();
             }
         }
     }

@@ -6,7 +6,7 @@ import javafx.util.Duration;
 
 public class PressAnimation extends AnimatorAdapter {
 
-    private static final int PRESS_DURATION_MS = 80;
+    private static final int PRESS_DURATION_MS   = 80;
     private static final int RELEASE_DURATION_MS = 100;
 
     private final ScaleTransition pressIn;
@@ -21,7 +21,7 @@ public class PressAnimation extends AnimatorAdapter {
         pressOut.setToX(1.0);
         pressOut.setToY(1.0);
 
-        pressIn.setOnFinished(e -> pressOut.play());
+        pressIn.setOnFinished(finishEvent -> pressOut.play());
     }
 
     @Override

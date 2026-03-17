@@ -12,7 +12,7 @@ public class SlideInAnimation extends AnimatorAdapter {
     private final TranslateTransition slide;
     private final TranslateTransition settle;
 
-    private final Node target;
+    private final Node   target;
     private final double fromY;
 
     public SlideInAnimation(Node target, double fromY, double overshoot) {
@@ -25,13 +25,12 @@ public class SlideInAnimation extends AnimatorAdapter {
         settle = new TranslateTransition(Duration.millis(SETTLE_DURATION_MS), target);
         settle.setToY(0);
 
-        slide.setOnFinished(event -> settle.play());
+        slide.setOnFinished(finishEvent -> settle.play());
     }
 
     @Override
     public void play() {
         target.setTranslateY(fromY);
-
         settle.stop();
         slide.play();
     }

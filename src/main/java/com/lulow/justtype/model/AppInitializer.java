@@ -25,6 +25,6 @@ public class AppInitializer {
         SceneManager sceneManager = SceneManager.getInstance();
         sceneManager.setMainStage(stage);
         sceneManager.loadFonts();
-        sceneManager.loadScene(ENTRY_SCENE);
+        sceneManager.switchScene(ENTRY_SCENE);
     }
 }

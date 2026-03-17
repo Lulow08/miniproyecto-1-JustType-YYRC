@@ -25,6 +25,20 @@
               AnchorPane.leftAnchor="0"
               AnchorPane.rightAnchor="0">
 
+         <Button
+                 fx:id="resetButton"
+                 prefHeight="30" prefWidth="34"
+                 styleClass="reset-button"
+                 StackPane.alignment="CENTER_LEFT"
+                 onAction="#onResetButtonClicked"
+                 AnchorPane.leftAnchor="24">
+            <graphic>
+               <Label
+                       text=""
+                       styleClass="reset-button-icon"/>
+            </graphic>
+         </Button>
+
          <HBox
                  fx:id="timerPill"
                  prefWidth="110" prefHeight="38"
@@ -40,7 +54,6 @@
                        alignment="CENTER"
                        styleClass="timer-label"
                        StackPane.alignment="CENTER"/>
-
             </StackPane>
 
          </HBox>
@@ -49,8 +62,7 @@
                  fx:id="levelLabel"
                  styleClass="level-label"
                  AnchorPane.topAnchor="0"
-                 AnchorPane.rightAnchor="36"
-                 AnchorPane.bottomAnchor="0"/>
+                 AnchorPane.rightAnchor="36"/>
 
       </AnchorPane>
 
