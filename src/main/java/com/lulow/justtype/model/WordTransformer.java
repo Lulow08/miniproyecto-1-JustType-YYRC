@@ -4,11 +4,25 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Applies casing transformations to words for the EXPERT tier.
+ * Randomly uppercases a subset of characters to increase difficulty.
+ */
 public class WordTransformer {
 
+    /** Minimum number of characters to uppercase. */
     private static final int MIN_UPPERCASE_COUNT = 1;
+
+    /** Maximum number of characters to uppercase. */
     private static final int MAX_UPPERCASE_COUNT = 3;
 
+    /**
+     * Lowercases the word, then randomly uppercases between
+     * {@value #MIN_UPPERCASE_COUNT} and {@value #MAX_UPPERCASE_COUNT} characters.
+     *
+     * @param word the input word
+     * @return the transformed word with random uppercase characters
+     */
     public String applyTier5Casing(String word) {
         char[] chars = word.toLowerCase().toCharArray();
 

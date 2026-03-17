@@ -2,6 +2,9 @@ package com.lulow.justtype.model.particles;
 
 import javafx.scene.shape.Rectangle;
 
+/**
+ * A confetti particle that launches upward, rotates, and falls under gravity.
+ */
 public class ConfettiParticle extends ParticleAdapter {
 
     private static final double GRAVITY           = 0.16;
@@ -12,14 +15,23 @@ public class ConfettiParticle extends ParticleAdapter {
     private static final double Y_VELOCITY_SPREAD = 4.0;
 
     private final double xVelocity;
-    private double yVelocity;
+    private double       yVelocity;
 
+    /**
+     * Creates a confetti particle.
+     *
+     * @param xPos      initial x position
+     * @param yPos      initial y position
+     * @param direction launch direction: {@code 1} for left, {@code -1} for right
+     * @param render    the rectangle to display
+     */
     public ConfettiParticle(double xPos, double yPos, int direction, Rectangle render) {
         super(xPos, yPos, render);
         this.xVelocity = -direction * (BASE_X_VELOCITY + Math.random() * X_VELOCITY_SPREAD);
         this.yVelocity = -(BASE_Y_VELOCITY + Math.random() * Y_VELOCITY_SPREAD);
     }
 
+    /** Applies gravity, updates position, and rotates the rectangle. */
     @Override
     public void update() {
         yVelocity += GRAVITY;

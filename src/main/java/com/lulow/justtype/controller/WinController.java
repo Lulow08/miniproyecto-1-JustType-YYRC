@@ -12,6 +12,12 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Controller for the win screen.
+ * Receives game result data from {@link GameController}, delegates rendering
+ * to {@link WinView}, and handles navigation back to the game or main menu
+ * via keyboard input.
+ */
 public class WinController {
 
     private static final Logger LOGGER = Logger.getLogger(WinController.class.getName());
@@ -21,8 +27,13 @@ public class WinController {
     @FXML private Label      statsLabel;
     @FXML private Label      hintLabel;
 
+    /** Manages the visual setup and animations of the win screen. */
     private WinView winView;
 
+    /**
+     * Initializes the controller after FXML injection.
+     * Creates the win view and registers keyboard handlers for ENTER and ESCAPE.
+     */
     @FXML
     public void initialize() {
         winView = new WinView(rootPane, titleLabel, statsLabel, hintLabel);
@@ -37,10 +48,21 @@ public class WinController {
         });
     }
 
+    /**
+     * Populates the win screen with game result data.
+     * Called by {@link GameController} after navigating to this screen.
+     *
+     * @param completedLevels the number of levels the player completed
+     * @param timeRemaining   seconds remaining when the final level was passed
+     * @param wordDisplay     the word display HBox carried over from the game screen
+     */
     public void setup(int completedLevels, int timeRemaining, HBox wordDisplay) {
         winView.setup(completedLevels, timeRemaining, wordDisplay);
     }
 
+    /**
+     * Stops the win screen animations and restarts the game.
+     */
     private void onPlayAgain() {
         winView.stop();
         try {
@@ -50,6 +72,9 @@ public class WinController {
         }
     }
 
+    /**
+     * Stops the win screen animations and returns to the main menu.
+     */
     private void onGoMenu() {
         winView.stop();
         try {

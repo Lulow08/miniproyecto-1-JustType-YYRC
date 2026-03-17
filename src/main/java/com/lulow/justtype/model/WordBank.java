@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Provides words for each difficulty tier.
+ * Words are shuffled and served in order; the deck resets when a new tier is entered
+ * or the current deck runs out.
+ */
 public class WordBank {
 
     private static final String[] BEGINNER_WORDS = {
@@ -41,10 +46,22 @@ public class WordBank {
             "metaprogramming", "parallelization", "functionality", "troubleshooting", "superstructure"
     };
 
+    /** Current shuffled deck of words. */
     private List<String>     deck        = new ArrayList<>();
+
+    /** The tier this deck was built for. */
     private LevelConfig.Tier currentTier = null;
+
+    /** Index of the next word to serve from the deck. */
     private int              deckIndex   = 0;
 
+    /**
+     * Returns a word appropriate for the given level.
+     * Reshuffles the deck when the tier changes or words run out.
+     *
+     * @param level the current game level
+     * @return a word string for the player to type
+     */
     public String getRandomWord(int level) {
         LevelConfig.Tier tier = LevelConfig.getTierForLevel(level);
 
@@ -57,12 +74,24 @@ public class WordBank {
         return deck.get(deckIndex++);
     }
 
+    /**
+     * Returns a shuffled copy of the given word array.
+     *
+     * @param words the source word array
+     * @return a shuffled list
+     */
     private List<String> shuffled(String[] words) {
         List<String> list = new ArrayList<>(List.of(words));
         Collections.shuffle(list);
         return list;
     }
 
+    /**
+     * Returns the word array corresponding to the given tier.
+     *
+     * @param tier the difficulty tier
+     * @return the matching word array
+     */
     private String[] wordsForTier(LevelConfig.Tier tier) {
         return switch (tier) {
             case BEGINNER -> BEGINNER_WORDS;

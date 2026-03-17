@@ -11,6 +11,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Particle emitter that spawns floating ash particles rising from the bottom of the screen.
+ * Active during the HARD and EXPERT difficulty tiers.
+ * Runs on a continuous {@link AnimationTimer}; emission can be toggled via {@link #play} and {@link #stop}.
+ */
 public class AshFX extends ParticleEmitterAdapter {
 
     private static final double MIN_SIZE      = 3.0;
@@ -23,17 +28,37 @@ public class AshFX extends ParticleEmitterAdapter {
     private static final double MIN_FADE_RATE = 0.002;
     private static final double MAX_FADE_RATE = 0.006;
 
+    /** The pane where particle rectangles are added. */
     private final Pane   layer;
+
+    /** Screen width used to randomize horizontal spawn positions. */
     private final double screenWidth;
+
+    /** Screen height used as the vertical spawn origin. */
     private final double screenHeight;
+
     private final Random random = new Random();
 
+    /** Live particles currently on screen. */
     private final List<AshParticle> particles = new ArrayList<>();
 
+    /** Whether the emitter is currently spawning new particles. */
     private boolean active            = false;
+
+    /** Number of particles spawned per animation frame. */
     private int     particlesPerFrame = 1;
+
+    /** Multiplier applied to each particle's upward speed. */
     private double  speedMultiplier   = 0.5;
 
+    /**
+     * Creates and starts the ash emitter on the given pane.
+     * The internal animation loop runs continuously but only spawns when active.
+     *
+     * @param layer        the pane to add particle nodes to
+     * @param screenWidth  width of the rendering area
+     * @param screenHeight height of the rendering area
+     */
     public AshFX(Pane layer, double screenWidth, double screenHeight) {
         this.layer        = layer;
         this.screenWidth  = screenWidth;
@@ -49,24 +74,41 @@ public class AshFX extends ParticleEmitterAdapter {
         loop.start();
     }
 
+    /**
+     * Activates particle spawning. Emission continues until {@link #stop()} is called.
+     *
+     * @param seconds ignored; ash runs indefinitely until stopped
+     */
     @Override
     public void play(double seconds) {
         active = true;
     }
 
+    /**
+     * Stops spawning new particles. Existing particles finish their lifecycle normally.
+     */
     @Override
     public void stop() {
         active = false;
     }
 
+    /**
+     * Sets the emission rate and speed for newly spawned particles.
+     *
+     * @param newParticlesPerFrame particles to spawn each frame
+     * @param newSpeedMultiplier   speed multiplier applied to each new particle
+     */
     @Override
     public void setIntensity(int newParticlesPerFrame, double newSpeedMultiplier) {
         this.particlesPerFrame = newParticlesPerFrame;
         this.speedMultiplier   = newSpeedMultiplier;
     }
 
+    /**
+     * Spawns a batch of ash particles at the bottom of the screen.
+     */
     private void spawnBatch() {
-        for (int spawnIndex = 0; spawnIndex < particlesPerFrame; spawnIndex++) {
+        for (int i = 0; i < particlesPerFrame; i++) {
             double xPos     = random.nextDouble() * screenWidth;
             double yPos     = screenHeight;
             double size     = MIN_SIZE + random.nextDouble() * (MAX_SIZE - MIN_SIZE);
@@ -87,14 +129,17 @@ public class AshFX extends ParticleEmitterAdapter {
         }
     }
 
+    /**
+     * Updates all live particles and removes dead ones from the scene.
+     */
     private void updateParticles() {
-        Iterator<AshParticle> iterator = particles.iterator();
-        while (iterator.hasNext()) {
-            AshParticle particle = iterator.next();
-            particle.update();
-            if (particle.isDead()) {
-                layer.getChildren().remove(particle.getRender());
-                iterator.remove();
+        Iterator<AshParticle> it = particles.iterator();
+        while (it.hasNext()) {
+            AshParticle p = it.next();
+            p.update();
+            if (p.isDead()) {
+                layer.getChildren().remove(p.getRender());
+                it.remove();
             }
         }
     }

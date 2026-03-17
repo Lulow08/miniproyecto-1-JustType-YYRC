@@ -7,12 +7,27 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * Handles the initial setup of the application.
+ * Configures the primary stage and loads the first scene.
+ */
 public class AppInitializer {
 
-    private static final String APP_TITLE   = "JustType";
-    private static final String FAVICON_PATH = "/icons/favicon.png";
-    private static final String ENTRY_SCENE = "menu-view.fxml";
+    /** Application window title. */
+    private static final String APP_TITLE    = "JustType";
 
+    /** Path to the application icon. */
+    private static final String FAVICON_PATH = "/icons/favicon.png";
+
+    /** FXML file for the entry scene. */
+    private static final String ENTRY_SCENE  = "menu-view.fxml";
+
+    /**
+     * Sets up the primary stage and navigates to the main menu.
+     *
+     * @param stage the primary stage to configure
+     * @throws IOException if the entry scene cannot be loaded
+     */
     public void start(Stage stage) throws IOException {
         Image favicon = new Image(Objects.requireNonNull(
                 getClass().getResourceAsStream(FAVICON_PATH)
