@@ -29,7 +29,7 @@ public final class SceneManager {
         Font.loadFont(getClass().getResourceAsStream("/fonts/GeistMonoNerdFont-Regular.otf"), 14);
     }
 
-    public <T> T loadScene(String fxmlFile) throws IOException {
+    public <SceneController> SceneController switchScene(String fxmlFile) throws IOException {
         AudioManager.getInstance().stopAll();
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/" + fxmlFile));
@@ -39,6 +39,7 @@ public final class SceneManager {
         scene.getStylesheets().add(
                 Objects.requireNonNull(getClass().getResource("/css/styles.css")).toExternalForm()
         );
+
         mainStage.setScene(scene);
         mainStage.show();
 
